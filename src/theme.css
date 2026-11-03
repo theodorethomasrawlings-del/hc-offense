@@ -104,3 +104,24 @@ th:first-child, td:first-child { text-align: left; }
 .nav { display: flex; gap: 8px; }
 .nav a { color: var(--muted); text-decoration: none; font-size: 16px; padding: 6px 10px; }
 .nav a.active { color: var(--fg); }
+
+/* Live screen columns: three across on the iPad, one scrolling column on a phone. */
+.cols { grid-template-columns: 1.3fr 1.3fr 1fr; }
+.three { grid-template-columns: 1fr 1fr 1fr; }
+.two { grid-template-columns: 1fr 1fr; }
+@media (max-width: 900px) {
+  .cols, .three, .two { grid-template-columns: 1fr; }
+  .screen { height: auto; min-height: 100%; overflow: visible; }
+  .scroll { overflow: visible; }
+  html, body, #root { height: auto; min-height: 100%; }
+  body { font-size: 17px; }
+  .btn { font-size: 16px !important; }
+  .btn.small { font-size: 14px !important; }
+  .btn.chip { font-size: 14px !important; }
+  h1 { font-size: 22px; }
+  .screen > .row, .game footer, .game footer .row { flex-wrap: wrap; }
+  .game footer > .row:last-child { width: 100%; }
+  .game footer > .row:last-child .btn { flex: 1; min-width: 0 !important; }
+  .screen > header .row:first-child > div:first-child { font-size: 24px !important; }
+  .big { font-size: 80px; }
+}

@@ -82,7 +82,7 @@ export default function Settings() {
         <Nav />
       </div>
       <div className="scroll grid" style={{ gap: 12 }}>
-        <div className="grid" style={{ gridTemplateColumns: '1fr 1fr 1fr', gap: 12, alignContent: 'start' }}>
+        <div className="grid three" style={{ gap: 12, alignContent: 'start' }}>
           <section className="panel grid" style={{ gap: 8 }}>
             <h2>Export email</h2>
             <input type="email" value={s.email} placeholder="shown on the export screen" onChange={(e) => void s.setEmail(e.target.value)} />
@@ -124,7 +124,7 @@ export default function Settings() {
             </button>
           </div>
         </div>
-        <div className="grid" style={{ gridTemplateColumns: '1fr 1fr 1fr', gap: 12, alignContent: 'start' }}>
+        <div className="grid three" style={{ gap: 12, alignContent: 'start' }}>
           {families.map((f, i) => (
             <ActionList key={i} family={f} onChange={(next) => setFamilies(families.map((x, j) => (j === i ? next : x)))} onRemove={() => window.confirm(`Remove ${f.name}?`) && setFamilies(families.filter((_, j) => j !== i))} />
           ))}

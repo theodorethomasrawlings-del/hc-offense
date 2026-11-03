@@ -188,7 +188,7 @@ export default function Game() {
         </div>
       )}
 
-      <div className="grid" style={{ gridTemplateColumns: '1.3fr 1.3fr 1fr', gap: 12, flex: 1, minHeight: 0, alignContent: 'start' }}>
+      <div className="grid cols" style={{ gap: 12, flex: 1, minHeight: 0, alignContent: 'start' }}>
         <div className="grid" style={{ gap: 10, alignContent: 'start' }}>
           <ButtonGroup
             title="Play"

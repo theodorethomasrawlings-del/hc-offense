@@ -59,7 +59,7 @@ export default function Trends() {
         {rows.length === 0 ? (
           <div className="muted">No finished games yet.</div>
         ) : (
-          <div className="grid" style={{ gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          <div className="grid two" style={{ gap: 12 }}>
             {chart('PPP', 'PPP', '#2fbf71')}
             {chart('eFG %', 'eFG %', '#6c8cff')}
             {chart('Good shot %', 'Good shot %', '#b58cff')}
