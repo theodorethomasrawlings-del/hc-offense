@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#4c2e8c"/>
+  <!-- clipboard body -->
+  <rect x="116" y="120" width="280" height="330" rx="28" fill="#f3f5f7"/>
+  <!-- clip -->
+  <rect x="196" y="84" width="120" height="70" rx="20" fill="#9aa4b2"/>
+  <rect x="226" y="68" width="60" height="40" rx="14" fill="#c7cdd6"/>
+  <!-- play diagram: X's and O's and an arrow -->
+  <circle cx="176" cy="230" r="18" fill="none" stroke="#4c2e8c" stroke-width="12"/>
+  <circle cx="256" cy="300" r="18" fill="none" stroke="#4c2e8c" stroke-width="12"/>
+  <g stroke="#ff5c5c" stroke-width="12" stroke-linecap="round">
+    <line x1="320" y1="214" x2="352" y2="246"/><line x1="352" y1="214" x2="320" y2="246"/>
+    <line x1="320" y1="364" x2="352" y2="396"/><line x1="352" y1="364" x2="320" y2="396"/>
+  </g>
+  <path d="M176 262 C 176 330, 230 370, 300 380" fill="none" stroke="#4c2e8c" stroke-width="12" stroke-linecap="round"/>
+  <path d="M276 362 L 304 382 L 274 396" fill="none" stroke="#4c2e8c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
