@@ -26,7 +26,7 @@ test('play, shot, made, Next commits with the right points', async () => {
   expect(screen.getByLabelText('points this possession')).toHaveTextContent('3 PTS')
   fireEvent.click(btn(/^next →$/i))
   await screen.findByText('#2')
-  expect(useGameStore.getState().possessions[0]).toMatchObject({ points: 3, family: 'Tiger', action: 'Ice', shot: 'PAINT3' })
+  expect(useGameStore.getState().possessions[0]).toMatchObject({ points: 3, family: 'Tiger', action: 'Ice', shot: 'PAINT3', paintTouches: 1 })
   expect(screen.getByLabelText('game totals')).toHaveTextContent('PPP 3.00')
 })
 

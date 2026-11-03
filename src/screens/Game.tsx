@@ -8,6 +8,8 @@ import type { ClockBucket, Continuation, LateClock, Result, Shot, Trigger } from
 import { draftChunk, draftComplete, rollUp, useGameStore } from '../store/gameStore'
 import { useSettings } from '../store/settingsStore'
 
+const PAINT_SHOTS: Shot[] = ['RIM2', 'PAINT2', 'PAINT3']
+
 export default function Game() {
   const nav = useNavigate()
   const g = useGameStore()
@@ -47,7 +49,12 @@ export default function Game() {
 
   const pickFamily = (f: string) => g.setDraft(draft.family === f ? { family: '', action: '' } : { family: f, action: '' })
   const pickAction = (a: string) => g.setDraft({ action: draft.action === a ? '' : a })
-  const pickShot = (s: Shot) => g.setDraft({ shot: draft.shot === s ? undefined : s })
+  const pickShot = (s: Shot) => {
+    const shot = draft.shot === s ? undefined : s
+    // A rim 2, paint 2 or paint-touch 3 is a paint touch by definition.
+    const paint = shot && PAINT_SHOTS.includes(shot) && !(draft.paintTouches ?? 0) ? { paintTouches: 1 } : {}
+    g.setDraft({ shot, ...paint })
+  }
   const pickResult = (r: Result) => {
     const result = draft.result === r ? undefined : r
     // A turnover has no shot and no free throws.
