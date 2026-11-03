@@ -123,3 +123,21 @@ test('media timeout goes to the summary', async () => {
   await waitFor(() => expect(router.state.location.pathname).toBe('/summary'))
   expect(useGameStore.getState().game?.timeouts).toEqual([1])
 })
+
+test('a dead ball we keep restarts at the play under the same number', async () => {
+  await liveGame()
+  click(/^Tiger$/)
+  click(/^Ice$/)
+  click(/dead ball, we keep it/i)
+  q('What play?')
+  expect(screen.getByRole('status', { name: 'so far' })).toHaveTextContent('#1 shot 2')
+  click(/^BLOB$/)
+  click(/^54 Gut$/)
+  click(/^paint touch 3$/i)
+  click(/^made$/i)
+  click(/^save →$/i)
+  await screen.findByText('#2')
+  const p = useGameStore.getState().possessions[0]
+  expect(p).toMatchObject({ n: 1, points: 3, orebs: 0, family: 'BLOB' })
+  expect(p.chunks[0].cont).toBe('FLOOR_FOUL')
+})

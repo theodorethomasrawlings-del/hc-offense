@@ -100,6 +100,13 @@ export default function GameSteps() {
     setStep(m < a ? 'REB' : 'DETAILS')
   }
   const theyGotIt = () => setStep('DETAILS')
+  /** Floor foul with no FTs, kicked ball, out of bounds off them: no shot, same possession, fresh page. */
+  const deadBall = () => {
+    g.setDraft({ shot: 'NONE', result: 'NONE', ftm: 0, fta: 0 })
+    g.continuePossession('FLOOR_FOUL')
+    setStep('PLAY')
+    setMsg(null)
+  }
   const keepBall = (c: Continuation) => {
     g.continuePossession(c)
     setStep('PLAY')
@@ -283,9 +290,12 @@ export default function GameSteps() {
                 Turnover
               </button>
               <button className="btn" style={{ minHeight: 60 }} onClick={fouledNoShot}>
-                Fouled, no shot
+                Fouled, no shot (FTs)
               </button>
             </div>
+            <button className="btn" style={{ minHeight: 56 }} onClick={deadBall}>
+              Dead ball, we keep it (foul no FTs, kick, OOB) → same possession
+            </button>
           </>
         )}
         {step === 'MADE' && (

@@ -53,9 +53,9 @@ export const RESULT_LABEL: Record<Result, string> = { MADE: 'Made', MISSED: 'Mis
 export const CONTINUATIONS: { key: Continuation; label: string }[] = [
   { key: 'OREB', label: 'OREB, keep going' },
   { key: 'DEAD_OREB', label: 'Dead ball OREB' },
-  { key: 'FLOOR_FOUL', label: 'Floor foul, inbound' },
+  { key: 'FLOOR_FOUL', label: 'Dead ball, we keep it' },
 ]
-export const CONT_LABEL: Record<Continuation, string> = { OREB: 'OREB', DEAD_OREB: 'Dead OREB', FLOOR_FOUL: 'Floor foul' }
+export const CONT_LABEL: Record<Continuation, string> = { OREB: 'OREB', DEAD_OREB: 'Dead OREB', FLOOR_FOUL: 'Dead ball' }
 
 export const TRIGGERS: { key: Trigger; label: string }[] = [
   { key: '2ND_MAKE', label: '2nd trigger off make' },
