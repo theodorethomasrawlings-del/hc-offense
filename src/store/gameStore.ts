@@ -3,6 +3,7 @@ import { db, newId } from '../db/db'
 import { chunkPoints } from '../domain/labels'
 import type { Chunk, Continuation, Draft, Game, Half, Player, Possession, Side, TimeoutKind } from '../domain/types'
 import { tagPossessions, type Tagged } from '../engine/streaks'
+import { rosterFor } from '../rosters/loadRoster'
 
 export type GameSetup = Omit<Game, 'id' | 'timeouts' | 'hcTimeouts' | 'oppTimeouts' | 'halfEnds' | 'status' | 'createdAt' | 'teamFouls' | 'rosterUs' | 'rosterThem' | 'arrowUs'> &
   Partial<Pick<Game, 'rosterUs' | 'rosterThem' | 'arrowUs'>>
@@ -41,6 +42,15 @@ export interface GameState {
   currentHalf(): Half
   currentSegment(): number
   nextN(): number
+}
+
+/** Empty rosters are filled from the rosters built into the app, so a chart never shows blank players. Edited rosters are left alone. */
+function withRosters(g: Game): Game {
+  return {
+    ...g,
+    rosterUs: g.rosterUs.length ? g.rosterUs : rosterFor('Holy Cross'),
+    rosterThem: g.rosterThem.length ? g.rosterThem : rosterFor(g.opponent),
+  }
 }
 
 export function normalizeGame(g: Game): Game {
@@ -147,11 +157,13 @@ export function createGameStore() {
           return
         }
         const possessions = (await db.possessions.where('gameId').equals(game.id).sortBy('n')).map(normalizePossession)
-        set({ game: normalizeGame(game), possessions, tagged: tagPossessions(possessions), draft: {}, loaded: true })
+        const filled = withRosters(normalizeGame(game))
+        if (filled.rosterUs !== game.rosterUs || filled.rosterThem !== game.rosterThem) await db.games.put(filled)
+        set({ game: filled, possessions, tagged: tagPossessions(possessions), draft: {}, loaded: true })
       },
 
       async startGame(g) {
-        const game: Game = normalizeGame({ ...g, id: newId(), timeouts: [], hcTimeouts: [], oppTimeouts: [], halfEnds: [], teamFouls: { us: [0, 0, 0], them: [0, 0, 0] }, status: 'LIVE', createdAt: Date.now() } as Game)
+        const game: Game = withRosters(normalizeGame({ ...g, id: newId(), timeouts: [], hcTimeouts: [], oppTimeouts: [], halfEnds: [], teamFouls: { us: [0, 0, 0], them: [0, 0, 0] }, status: 'LIVE', createdAt: Date.now() } as Game))
         await db.games.put(game)
         set({ game, possessions: [], tagged: [], draft: {}, loaded: true })
       },

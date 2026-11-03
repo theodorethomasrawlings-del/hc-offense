@@ -1,4 +1,4 @@
-import { matchRoster } from '../loadRoster'
+import { matchRoster, rosterFor } from '../loadRoster'
 
 const idx = [
   { team: 'Holy Cross', aliases: ['HC'], file: 'holy-cross.json' },
@@ -13,4 +13,12 @@ test('matches exact names, aliases, and partial names, ignoring case and punctua
   expect(matchRoster(idx, 'Loyola')?.file).toBe('loyola-maryland.json')
   expect(matchRoster(idx, 'Siena')).toBeNull()
   expect(matchRoster(idx, '')).toBeNull()
+})
+
+test('rosters ship inside the app: URI, Villanova and Holy Cross resolve with no network', () => {
+  expect(rosterFor('URI').length).toBeGreaterThan(10)
+  expect(rosterFor('Rhode Island')[0]).toMatchObject({ fouls: 0 })
+  expect(rosterFor('Nova').length).toBeGreaterThan(10)
+  expect(rosterFor('Holy Cross').length).toBeGreaterThan(10)
+  expect(rosterFor('Siena')).toEqual([])
 })

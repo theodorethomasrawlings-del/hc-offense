@@ -64,3 +64,19 @@ test('edit rosters adds a player', async () => {
   await waitFor(() => expect(g().rosterThem).toHaveLength(2))
   expect(g().rosterThem[1]).toMatchObject({ num: '23', name: 'New Guy', fouls: 0 })
 })
+
+test('a game started with no rosters gets Holy Cross and the opponent filled in automatically, even for an old saved game', async () => {
+  await db.games.clear()
+  useGameStore.setState({ game: null, possessions: [], tagged: [], draft: {}, loaded: false })
+  await useGameStore.getState().startGame({ opponent: 'URI', date: '2026-11-03', home: false })
+  const g = useGameStore.getState().game!
+  expect(g.rosterUs.length).toBeGreaterThan(10)
+  expect(g.rosterThem.length).toBeGreaterThan(10)
+
+  // A game saved by an older build with empty rosters heals on load.
+  await db.games.put({ ...g, rosterUs: [], rosterThem: [] })
+  useGameStore.setState({ game: null, loaded: false })
+  await useGameStore.getState().load()
+  expect(useGameStore.getState().game!.rosterThem.length).toBeGreaterThan(10)
+  expect((await db.games.get(g.id))!.rosterThem.length).toBeGreaterThan(10)
+})
