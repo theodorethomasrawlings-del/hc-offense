@@ -4,6 +4,10 @@ import { routes } from '../../App'
 import { db } from '../../db/db'
 import { useGameStore } from '../../store/gameStore'
 
+beforeEach(() => {
+  Object.defineProperty(window, 'innerWidth', { configurable: true, value: 390 })
+})
+
 async function liveGame() {
   await db.games.clear()
   await db.possessions.clear()
