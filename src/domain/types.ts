@@ -109,6 +109,8 @@ export interface Family {
 }
 
 export interface Labels {
+  /** Play-sheet version the saved labels came from; older saves are replaced by the new sheet. */
+  version?: number
   families: Family[]
 }
 

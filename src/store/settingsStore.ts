@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { db } from '../db/db'
-import { DEFAULT_LABELS } from '../domain/labels'
+import { DEFAULT_LABELS, LABELS_VERSION } from '../domain/labels'
 import type { Labels } from '../domain/types'
 
 export type Theme = 'dark' | 'light'
@@ -37,12 +37,15 @@ export function createSettingsStore() {
       const theme = get<Theme>('theme', 'dark')
       applyTheme(theme)
       const saved = get<Partial<Labels>>('labels', {})
-      set({ labels: { ...DEFAULT_LABELS, ...saved }, email: get('email', ''), theme, noteHistory: get<string[]>('noteHistory', []), loaded: true })
+      // A new play sheet replaces labels saved from an older one.
+      const labels = saved.version === LABELS_VERSION ? { ...DEFAULT_LABELS, ...saved } : DEFAULT_LABELS
+      set({ labels, email: get('email', ''), theme, noteHistory: get<string[]>('noteHistory', []), loaded: true })
     },
 
     async setLabels(labels) {
-      await db.settings.put({ key: 'labels', value: labels })
-      set({ labels })
+      const next = { ...labels, version: LABELS_VERSION }
+      await db.settings.put({ key: 'labels', value: next })
+      set({ labels: next })
     },
 
     async resetLabels() {
