@@ -115,13 +115,15 @@ test('back retraces a step; edit last opens details and recomputes points', asyn
 test('media timeout goes to the summary', async () => {
   const router = await liveGame()
   click(/^Transition$/)
-  click(/^Layup$/)
+  click(/^Other$/)
+  click(/^Fast break$/)
   click(/turnover/i)
   click(/^save →$/i)
   await screen.findByText('#2')
   click(/^media to$/i)
   await waitFor(() => expect(router.state.location.pathname).toBe('/summary'))
   expect(useGameStore.getState().game?.timeouts).toEqual([1])
+  expect(useGameStore.getState().possessions[0]).toMatchObject({ transition: true, family: 'Other', action: 'Fast break' })
 })
 
 test('a dead ball we keep restarts at the play under the same number', async () => {

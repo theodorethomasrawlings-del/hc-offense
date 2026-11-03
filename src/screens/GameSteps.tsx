@@ -126,6 +126,7 @@ export default function GameSteps() {
       const all = [...chunks, draftChunk(draft)]
       await g.editPossession(last.id, {
         ...rollUp(all),
+        transition: draft.transition ?? false,
         trigger: draft.trigger ?? null,
         lateClock: draft.lateClock ?? null,
         clock: draft.clock ?? null,
@@ -155,6 +156,7 @@ export default function GameSteps() {
       action: tail.action,
       paintTouches: tail.paintTouches,
       reversals: tail.reversals,
+      transition: last.transition,
       trigger: last.trigger,
       lateClock: last.lateClock,
       clock: last.clock,
@@ -238,10 +240,10 @@ export default function GameSteps() {
   const noteHistory = [...new Set([...settings.noteHistory, ...g.possessions.map((p) => p.note.trim()).filter(Boolean)])].slice(0, 60)
 
   // What has been answered so far on this possession.
-  const crumbs = [playLabel({ family: draft.family ?? '', action: draft.action ?? '' }), draft.shot && draft.shot !== 'NONE' ? SHOT_LABEL[draft.shot] : '', draft.result ? RESULT_LABEL[draft.result] : '', fta ? `${ftm}/${fta} FT` : '']
+  const crumbs = [draft.transition ? 'Transition' : '', playLabel({ family: draft.family ?? '', action: draft.action ?? '' }), draft.shot && draft.shot !== 'NONE' ? SHOT_LABEL[draft.shot] : '', draft.result ? RESULT_LABEL[draft.result] : '', fta ? `${ftm}/${fta} FT` : '']
     .filter(Boolean)
     .join(' · ')
-  const idle = step === 'PLAY' && !draft.family && !chunks.length && !editing
+  const idle = step === 'PLAY' && !draft.family && !draft.transition && !chunks.length && !editing
 
   const question: Record<Step, string> = {
     PLAY: 'What play?',
@@ -273,7 +275,19 @@ export default function GameSteps() {
       </h1>
 
       <div className="grid step" style={{ gap: 10, alignContent: 'start', flex: 1, minHeight: 0 }}>
-        {step === 'PLAY' && <ButtonGroup columns={4} height={64} options={families.map((f) => ({ key: f, label: f }))} selected={draft.family || undefined} onSelect={pickFamily} ariaLabel="play" />}
+        {step === 'PLAY' && (
+          <>
+            <div className="grid" style={{ gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+              <button className={`btn ${draft.transition ? 'stop on' : ''}`} style={{ minHeight: 56 }} aria-pressed={!!draft.transition} onClick={() => g.setDraft({ transition: !draft.transition })}>
+                Transition
+              </button>
+              <button className="btn" style={{ minHeight: 56 }} onClick={() => setStep('END')}>
+                No set play
+              </button>
+            </div>
+            <ButtonGroup columns={4} height={64} options={families.map((f) => ({ key: f, label: f }))} selected={draft.family || undefined} onSelect={pickFamily} ariaLabel="play" />
+          </>
+        )}
         {step === 'ACTION' && (
           <>
             <ButtonGroup columns={4} height={60} options={actions.map((a) => ({ key: a, label: a }))} selected={draft.action || undefined} onSelect={pickAction} ariaLabel="action" />

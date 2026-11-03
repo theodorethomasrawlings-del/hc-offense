@@ -81,6 +81,7 @@ export default function GameWide() {
       const all = [...chunks, draftChunk(draft)]
       await g.editPossession(last.id, {
         ...rollUp(all),
+        transition: draft.transition ?? false,
         trigger: draft.trigger ?? null,
         lateClock: draft.lateClock ?? null,
         clock: draft.clock ?? null,
@@ -109,6 +110,7 @@ export default function GameWide() {
       action: tail.action,
       paintTouches: tail.paintTouches,
       reversals: tail.reversals,
+      transition: last.transition,
       trigger: last.trigger,
       lateClock: last.lateClock,
       clock: last.clock,
@@ -193,6 +195,11 @@ export default function GameWide() {
           <ButtonGroup
             title="Play"
             columns={4}
+            extra={
+              <button className={`btn ${draft.transition ? 'stop on' : ''}`} style={{ minHeight: 50, fontSize: 18, gridColumn: 'span 2' }} aria-pressed={!!draft.transition} onClick={() => g.setDraft({ transition: !draft.transition })}>
+                Transition
+              </button>
+            }
             height={50}
             fontSize={18}
             options={families.map((f) => ({ key: f, label: f }))}

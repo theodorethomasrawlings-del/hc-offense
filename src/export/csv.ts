@@ -3,7 +3,7 @@ import { endedText } from '../components/PossessionChart'
 import type { Game, Possession } from '../domain/types'
 import type { Tagged } from '../engine/streaks'
 
-export const CSV_HEADER = ['POSS', 'HALF', 'SEGMENT', 'PTS', 'STREAK', 'PLAY', 'ENDED', 'CLOCK', 'TRIGGER', 'LATE', 'PAINT', 'REV', 'OREB', 'NOTE']
+export const CSV_HEADER = ['POSS', 'HALF', 'SEGMENT', 'PTS', 'STREAK', 'TRANSITION', 'PLAY', 'ENDED', 'CLOCK', 'TRIGGER', 'LATE', 'PAINT', 'REV', 'OREB', 'NOTE']
 
 const cell = (v: string | number): string => {
   const s = String(v)
@@ -16,6 +16,7 @@ export const possessionRow = (t: Tagged): (string | number)[] => [
   t.segment + 1,
   t.points,
   t.tag,
+  t.transition ? 'T' : '',
   t.chunks.length ? [...new Set(t.chunks.map(playLabel).filter(Boolean))].join(' > ') : playLabel(t),
   endedText(t),
   t.clock ?? '',

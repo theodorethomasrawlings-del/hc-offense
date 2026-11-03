@@ -1,6 +1,6 @@
 import { STAT_COLS, statCells } from '../components/StatTable'
 import type { Game } from '../domain/types'
-import { afterOreb, byClock, byFamily, byLateClock, byPaintTouch, byPlay, byReversals, byTrigger, shotChart, type Row } from '../engine/breakdowns'
+import { afterOreb, byClock, byFamily, byLateClock, byPaintTouch, byPlay, byReversals, byTransition, byTrigger, shotChart, type Row } from '../engine/breakdowns'
 import { fmtPct, fmtPPP, fmtRatio } from '../engine/format'
 import type { Tagged } from '../engine/streaks'
 import { suggestions } from '../engine/suggest'
@@ -51,6 +51,7 @@ export function toText(game: Game, ts: Tagged[]): string {
   block('BY FAMILY', byFamily(ts))
   block('BY PLAY', byPlay(ts))
   block('SHOT CLOCK AT HALF COURT', byClock(ts))
+  block('TRANSITION VS HALF COURT', byTransition(ts))
   block('TRIGGERS', byTrigger(ts))
   block('LATE CLOCK', byLateClock(ts))
   block('PAINT TOUCH', byPaintTouch(ts))

@@ -15,6 +15,7 @@ export function poss(over: Partial<Possession> = {}): Possession {
     fta: 0,
     family: '',
     action: '',
+    transition: false,
     trigger: null,
     lateClock: null,
     clock: null,

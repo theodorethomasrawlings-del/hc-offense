@@ -46,6 +46,7 @@ export function normalizePossession(p: Possession): Possession {
     fta: p.fta ?? 0,
     family: p.family ?? '',
     action: p.action ?? '',
+    transition: p.transition ?? false,
     trigger: p.trigger ?? null,
     lateClock: p.lateClock ?? null,
     clock: p.clock ?? null,
@@ -158,6 +159,7 @@ export function createGameStore() {
             n: get().nextN(),
             half: get().currentHalf(),
             ...roll,
+            transition: draft.transition ?? false,
             trigger: draft.trigger ?? null,
             lateClock: draft.lateClock ?? null,
             clock: draft.clock ?? null,
@@ -178,7 +180,7 @@ export function createGameStore() {
         const d = get().draft
         const chunk: Chunk = { ...draftChunk(d), cont }
         // Trigger, clock and note belong to the possession; the next chunk starts with a blank shot and play.
-        set({ draft: { chunks: [...(d.chunks ?? []), chunk], trigger: d.trigger, lateClock: d.lateClock, clock: d.clock, note: d.note } })
+        set({ draft: { chunks: [...(d.chunks ?? []), chunk], transition: d.transition, trigger: d.trigger, lateClock: d.lateClock, clock: d.clock, note: d.note } })
       },
 
       async editPossession(id, patch) {

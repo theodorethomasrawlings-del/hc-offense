@@ -16,8 +16,7 @@ export const DEFAULT_LABELS: Labels = {
     { name: 'Post-up', actions: ['5 Brush', '5 Return', 'Deuce 5 Philly', '5 Penny', '1'] },
     { name: 'BLOB', actions: ['54 Gut', 'Gut Eye', 'Gut Walmart', '54 Strong', 'Strong Flash', 'Stevie', 'Heat'] },
     { name: 'SLOB', actions: ['Brush', 'Spider', 'Deep'] },
-    { name: 'Transition', actions: ['Layup', 'Kick 3', 'Trail', 'Drag'] },
-    { name: 'Other', actions: ['Freelance', 'Broken play', 'End of clock', 'Heave'] },
+    { name: 'Other', actions: ['Freelance', 'Broken play', 'End of clock', 'Heave', 'Fast break'] },
   ],
 }
 

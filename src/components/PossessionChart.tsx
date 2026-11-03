@@ -24,6 +24,7 @@ export default function PossessionChart({ tagged }: { tagged: Tagged[] }) {
           <th>Half</th>
           <th>Pts</th>
           <th style={{ textAlign: 'left' }}>Streak</th>
+          <th>Trans</th>
           <th style={{ textAlign: 'left' }}>Play</th>
           <th style={{ textAlign: 'left' }}>How it ended</th>
           <th>Clock</th>
@@ -40,6 +41,7 @@ export default function PossessionChart({ tagged }: { tagged: Tagged[] }) {
             <td>{t.half === 3 ? 'OT' : t.half}</td>
             <td>{t.points}</td>
             <td style={{ textAlign: 'left' }}>{t.tag}</td>
+            <td>{t.transition ? 'T' : ''}</td>
             <td style={{ textAlign: 'left' }}>{t.chunks.length ? [...new Set(t.chunks.map(playLabel).filter(Boolean))].join(' > ') : playLabel(t)}</td>
             <td style={{ textAlign: 'left', whiteSpace: 'normal' }}>{endedText(t)}</td>
             <td>{t.clock ?? ''}</td>

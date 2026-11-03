@@ -56,6 +56,8 @@ export interface Possession {
   fta: number
   family: string
   action: string
+  /** Transition possession (any play can run out of it). */
+  transition: boolean
   trigger: Trigger | null
   lateClock: LateClock | null
   clock: ClockBucket | null
@@ -94,5 +96,5 @@ export interface Labels {
 }
 
 export type Draft = Partial<
-  Pick<Possession, 'shot' | 'result' | 'ftm' | 'fta' | 'family' | 'action' | 'trigger' | 'lateClock' | 'clock' | 'paintTouches' | 'reversals' | 'note' | 'chunks'>
+  Pick<Possession, 'shot' | 'result' | 'ftm' | 'fta' | 'family' | 'action' | 'transition' | 'trigger' | 'lateClock' | 'clock' | 'paintTouches' | 'reversals' | 'note' | 'chunks'>
 >

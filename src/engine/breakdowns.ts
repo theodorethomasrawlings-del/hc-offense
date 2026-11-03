@@ -31,6 +31,10 @@ const multi = (ts: Tagged[], keys: (t: Tagged) => string[]): Row[] => {
 export const byFamily = (ts: Tagged[]): Row[] => multi(ts, familiesOf)
 export const byPlay = (ts: Tagged[]): Row[] => multi(ts, playsOf)
 
+export const byTransition = (ts: Tagged[]): Row[] => [
+  { label: 'Transition', stats: stats(ts.filter((t) => t.transition)) },
+  { label: 'Half court', stats: stats(ts.filter((t) => !t.transition)) },
+]
 export const byTrigger = (ts: Tagged[]): Row[] => group(ts, (t) => (t.trigger ? TRIGGER_LABEL[t.trigger] : null))
 export const byLateClock = (ts: Tagged[]): Row[] => group(ts, (t) => (t.lateClock ? LATE_LABEL[t.lateClock] : null))
 export const byClock = (ts: Tagged[]): Row[] => {

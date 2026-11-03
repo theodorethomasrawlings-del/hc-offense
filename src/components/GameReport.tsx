@@ -1,5 +1,5 @@
 import type { Game } from '../domain/types'
-import { afterOreb, byClock, byFamily, byLateClock, byPaintTouch, byPlay, byReversals, byTrigger, shotChart, type Row } from '../engine/breakdowns'
+import { afterOreb, byClock, byFamily, byLateClock, byPaintTouch, byPlay, byReversals, byTransition, byTrigger, shotChart, type Row } from '../engine/breakdowns'
 import { fmtPct, fmtPPP, fmtRatio } from '../engine/format'
 import type { Tagged } from '../engine/streaks'
 import { suggestions } from '../engine/suggest'
@@ -99,6 +99,7 @@ export default function GameReport({ game, tagged }: { game: Game; tagged: Tagge
       <Section title="By family" rows={byFamily(tagged)} />
       <Section title="By play" rows={byPlay(tagged)} />
       <Section title="Shot clock at half court" rows={byClock(tagged)} />
+      <Section title="Transition vs half court" rows={byTransition(tagged)} />
       <Section title="Triggers" rows={byTrigger(tagged)} />
       <Section title="Late clock" rows={byLateClock(tagged)} />
       <Section title="Paint touch" rows={byPaintTouch(tagged)} />

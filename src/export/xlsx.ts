@@ -1,7 +1,7 @@
 import * as XLSX from 'xlsx'
 import { STAT_COLS, statCells } from '../components/StatTable'
 import type { Game } from '../domain/types'
-import { afterOreb, byClock, byFamily, byLateClock, byPaintTouch, byPlay, byReversals, byTrigger, shotChart, type Row as BRow } from '../engine/breakdowns'
+import { afterOreb, byClock, byFamily, byLateClock, byPaintTouch, byPlay, byReversals, byTransition, byTrigger, shotChart, type Row as BRow } from '../engine/breakdowns'
 import { fmtPct, fmtPPP } from '../engine/format'
 import type { Tagged } from '../engine/streaks'
 import { suggestions } from '../engine/suggest'
@@ -51,6 +51,7 @@ export function toWorkbook(game: Game, ts: Tagged[]): XLSX.WorkBook {
     ...block('By family', byFamily(ts)),
     ...block('By play', byPlay(ts)),
     ...block('Shot clock at half court', byClock(ts)),
+    ...block('Transition vs half court', byTransition(ts)),
     ...block('Triggers', byTrigger(ts)),
     ...block('Late clock', byLateClock(ts)),
     ...block('Paint touch', byPaintTouch(ts)),
