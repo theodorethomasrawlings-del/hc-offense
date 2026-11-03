@@ -1,0 +1,66 @@
+{
+  "team": "Northeastern",
+  "aliases": [
+    "NU",
+    "Huskies"
+  ],
+  "source": "https://nuhuskies.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Josh Goodwin"
+    },
+    {
+      "num": "1",
+      "name": "Damian Jung"
+    },
+    {
+      "num": "2",
+      "name": "Ryan Williams"
+    },
+    {
+      "num": "4",
+      "name": "Mike Loughnane"
+    },
+    {
+      "num": "7",
+      "name": "Jovan Icitovic"
+    },
+    {
+      "num": "8",
+      "name": "Dorian Grosber"
+    },
+    {
+      "num": "9",
+      "name": "Rashad King"
+    },
+    {
+      "num": "10",
+      "name": "Miles Newton"
+    },
+    {
+      "num": "11",
+      "name": "Danny Houlihan"
+    },
+    {
+      "num": "13",
+      "name": "Petar Pinter"
+    },
+    {
+      "num": "23",
+      "name": "Louis Bond"
+    },
+    {
+      "num": "24",
+      "name": "Sage Baptiste"
+    },
+    {
+      "num": "30",
+      "name": "Brayden Young"
+    },
+    {
+      "num": "54",
+      "name": "Liam Koelsch"
+    }
+  ]
+}

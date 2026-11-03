@@ -1,0 +1,70 @@
+{
+  "team": "UAlbany",
+  "aliases": [
+    "Albany",
+    "Great Danes"
+  ],
+  "source": "https://ualbanysports.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Papa Kounta"
+    },
+    {
+      "num": "1",
+      "name": "Tyler Jones"
+    },
+    {
+      "num": "2",
+      "name": "Ollie Engen"
+    },
+    {
+      "num": "3",
+      "name": "Wilkin Paulino"
+    },
+    {
+      "num": "4",
+      "name": "Miles Rose"
+    },
+    {
+      "num": "7",
+      "name": "Abdoulaye Fall"
+    },
+    {
+      "num": "8",
+      "name": "Benjamin Michaels"
+    },
+    {
+      "num": "9",
+      "name": "Erwann Bussing"
+    },
+    {
+      "num": "11",
+      "name": "Pedro Santos"
+    },
+    {
+      "num": "13",
+      "name": "Kean Webb"
+    },
+    {
+      "num": "14",
+      "name": "Zacharie Matulu"
+    },
+    {
+      "num": "19",
+      "name": "Moustapha Ndao"
+    },
+    {
+      "num": "21",
+      "name": "Petar Miovic"
+    },
+    {
+      "num": "23",
+      "name": "U-Mier Graham"
+    },
+    {
+      "num": "24",
+      "name": "Callum Smith"
+    }
+  ]
+}

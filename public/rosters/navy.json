@@ -1,0 +1,102 @@
+{
+  "team": "Navy",
+  "aliases": [
+    "Midshipmen",
+    "Mids"
+  ],
+  "source": "https://navysports.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "1",
+      "name": "Wayne Fletcher II"
+    },
+    {
+      "num": "2",
+      "name": "Cam Cole"
+    },
+    {
+      "num": "3",
+      "name": "Julian Gabbidon"
+    },
+    {
+      "num": "5",
+      "name": "Luke Mayberry"
+    },
+    {
+      "num": "6",
+      "name": "Akim Iscandari"
+    },
+    {
+      "num": "7",
+      "name": "David Burnett"
+    },
+    {
+      "num": "8",
+      "name": "Colin Pollock"
+    },
+    {
+      "num": "9",
+      "name": "Marlon Williams"
+    },
+    {
+      "num": "10",
+      "name": "Jinwoo Kim"
+    },
+    {
+      "num": "11",
+      "name": "Jerry Ashley Jr."
+    },
+    {
+      "num": "15",
+      "name": "Bryce Reynierson"
+    },
+    {
+      "num": "17",
+      "name": "Sean Griffin"
+    },
+    {
+      "num": "18",
+      "name": "Justin Nordin"
+    },
+    {
+      "num": "20",
+      "name": "Sam Pitrof"
+    },
+    {
+      "num": "21",
+      "name": "Jordan Pennick"
+    },
+    {
+      "num": "22",
+      "name": "Drew Timmons"
+    },
+    {
+      "num": "23",
+      "name": "JP Baldwin"
+    },
+    {
+      "num": "24",
+      "name": "Matt Gaffney"
+    },
+    {
+      "num": "25",
+      "name": "Charlie Crane"
+    },
+    {
+      "num": "33",
+      "name": "Tobi Raji"
+    },
+    {
+      "num": "34",
+      "name": "Dylan Gassaway"
+    },
+    {
+      "num": "35",
+      "name": "RJ Roche"
+    },
+    {
+      "num": "42",
+      "name": "Cooper Jackson"
+    }
+  ]
+}

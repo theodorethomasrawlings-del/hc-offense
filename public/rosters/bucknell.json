@@ -1,0 +1,77 @@
+{
+  "team": "Bucknell",
+  "aliases": [
+    "Bison"
+  ],
+  "source": "https://bucknellbison.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Patrick O'Brien"
+    },
+    {
+      "num": "1",
+      "name": "Jacob Meachem"
+    },
+    {
+      "num": "2",
+      "name": "Jayden Williams"
+    },
+    {
+      "num": "3",
+      "name": "Aleksander Pachucki"
+    },
+    {
+      "num": "4",
+      "name": "Rocco Lamuno"
+    },
+    {
+      "num": "6",
+      "name": "Kyle Marshall"
+    },
+    {
+      "num": "7",
+      "name": "Matt Lange"
+    },
+    {
+      "num": "8",
+      "name": "Danny Kennard"
+    },
+    {
+      "num": "9",
+      "name": "Ethan Marten-Coney"
+    },
+    {
+      "num": "10",
+      "name": "Ludvik Bergseng"
+    },
+    {
+      "num": "11",
+      "name": "Luke Soden"
+    },
+    {
+      "num": "12",
+      "name": "Mert Kocagozoglu"
+    },
+    {
+      "num": "13",
+      "name": "Luca Soroa Schaller"
+    },
+    {
+      "num": "15",
+      "name": "Aidan Rousseau"
+    },
+    {
+      "num": "20",
+      "name": "Anderson Hoctor"
+    },
+    {
+      "num": "23",
+      "name": "Joe Youakim"
+    },
+    {
+      "num": "32",
+      "name": "Kellen Welch"
+    }
+  ]
+}

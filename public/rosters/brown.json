@@ -1,0 +1,81 @@
+{
+  "team": "Brown",
+  "aliases": [
+    "Bears"
+  ],
+  "source": "https://brownbears.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Kenneth Francis Jr."
+    },
+    {
+      "num": "1",
+      "name": "Isaiah Langham"
+    },
+    {
+      "num": "2",
+      "name": "Jeremiah Jenkins"
+    },
+    {
+      "num": "3",
+      "name": "Logan Jones"
+    },
+    {
+      "num": "4",
+      "name": "Jonah Drezner"
+    },
+    {
+      "num": "5",
+      "name": "Adrian Uchidiuno"
+    },
+    {
+      "num": "6",
+      "name": "Wyatt DeGraaf"
+    },
+    {
+      "num": "8",
+      "name": "Rykan Woo"
+    },
+    {
+      "num": "11",
+      "name": "Jerrell Barron Jr."
+    },
+    {
+      "num": "12",
+      "name": "Malcolm Wrisby-Jefferson"
+    },
+    {
+      "num": "14",
+      "name": "Luke Paragon"
+    },
+    {
+      "num": "15",
+      "name": "Emmanuel Jamgbadi"
+    },
+    {
+      "num": "22",
+      "name": "Timmy Bollin"
+    },
+    {
+      "num": "23",
+      "name": "David Rochester"
+    },
+    {
+      "num": "30",
+      "name": "Brady Loughlin"
+    },
+    {
+      "num": "33",
+      "name": "Charlie O'Sullivan"
+    },
+    {
+      "num": "42",
+      "name": "Ray Cuevas"
+    },
+    {
+      "num": "45",
+      "name": "N'famara Dabo"
+    }
+  ]
+}

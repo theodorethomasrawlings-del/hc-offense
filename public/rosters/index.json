@@ -1,3 +1,176 @@
 [
-  { "team": "Holy Cross", "aliases": ["HC", "Crusaders"], "file": "holy-cross.json" }
+  {
+    "team": "Holy Cross",
+    "aliases": [
+      "HC",
+      "Crusaders"
+    ],
+    "file": "holy-cross.json"
+  },
+  {
+    "team": "Rhode Island",
+    "aliases": [
+      "URI",
+      "Rhody"
+    ],
+    "file": "rhode-island.json"
+  },
+  {
+    "team": "Villanova",
+    "aliases": [
+      "Nova"
+    ],
+    "file": "villanova.json"
+  },
+  {
+    "team": "Furman",
+    "aliases": [
+      "Paladins"
+    ],
+    "file": "furman.json"
+  },
+  {
+    "team": "UAlbany",
+    "aliases": [
+      "Albany",
+      "Great Danes"
+    ],
+    "file": "ualbany.json"
+  },
+  {
+    "team": "Brown",
+    "aliases": [
+      "Bears"
+    ],
+    "file": "brown.json"
+  },
+  {
+    "team": "Harvard",
+    "aliases": [
+      "Crimson"
+    ],
+    "file": "harvard.json"
+  },
+  {
+    "team": "Dartmouth",
+    "aliases": [
+      "Big Green"
+    ],
+    "file": "dartmouth.json"
+  },
+  {
+    "team": "New Hampshire",
+    "aliases": [
+      "UNH",
+      "Wildcats"
+    ],
+    "file": "new-hampshire.json"
+  },
+  {
+    "team": "Northeastern",
+    "aliases": [
+      "NU",
+      "Huskies"
+    ],
+    "file": "northeastern.json"
+  },
+  {
+    "team": "Stonehill",
+    "aliases": [
+      "Skyhawks"
+    ],
+    "file": "stonehill.json"
+  },
+  {
+    "team": "Lesley",
+    "aliases": [
+      "Lynx"
+    ],
+    "file": "lesley.json"
+  },
+  {
+    "team": "Texas A&M",
+    "aliases": [
+      "A&M",
+      "Aggies",
+      "TAMU"
+    ],
+    "file": "texas-a-m.json"
+  },
+  {
+    "team": "TCU",
+    "aliases": [
+      "Horned Frogs"
+    ],
+    "file": "tcu.json"
+  },
+  {
+    "team": "Army West Point",
+    "aliases": [
+      "Army",
+      "Black Knights"
+    ],
+    "file": "army-west-point.json"
+  },
+  {
+    "team": "American",
+    "aliases": [
+      "AU",
+      "Eagles"
+    ],
+    "file": "american.json"
+  },
+  {
+    "team": "Navy",
+    "aliases": [
+      "Midshipmen",
+      "Mids"
+    ],
+    "file": "navy.json"
+  },
+  {
+    "team": "Loyola Maryland",
+    "aliases": [
+      "Loyola MD",
+      "Loyola",
+      "Greyhounds"
+    ],
+    "file": "loyola-maryland.json"
+  },
+  {
+    "team": "Lehigh",
+    "aliases": [
+      "Mountain Hawks"
+    ],
+    "file": "lehigh.json"
+  },
+  {
+    "team": "Colgate",
+    "aliases": [
+      "Raiders"
+    ],
+    "file": "colgate.json"
+  },
+  {
+    "team": "Bucknell",
+    "aliases": [
+      "Bison"
+    ],
+    "file": "bucknell.json"
+  },
+  {
+    "team": "Boston University",
+    "aliases": [
+      "BU",
+      "Terriers"
+    ],
+    "file": "boston-university.json"
+  },
+  {
+    "team": "Lafayette",
+    "aliases": [
+      "Leopards"
+    ],
+    "file": "lafayette.json"
+  }
 ]

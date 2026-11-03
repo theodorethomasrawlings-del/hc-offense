@@ -1,0 +1,70 @@
+{
+  "team": "Boston University",
+  "aliases": [
+    "BU",
+    "Terriers"
+  ],
+  "source": "https://goterriers.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Matai Baptiste"
+    },
+    {
+      "num": "1",
+      "name": "Alex Zakheim"
+    },
+    {
+      "num": "3",
+      "name": "Jaxson Terry"
+    },
+    {
+      "num": "5",
+      "name": "Kyrone Alexander"
+    },
+    {
+      "num": "6",
+      "name": "Sam Hughes"
+    },
+    {
+      "num": "7",
+      "name": "Azmar Abdullah"
+    },
+    {
+      "num": "8",
+      "name": "Peter Carr"
+    },
+    {
+      "num": "9",
+      "name": "Joost Dalgaard"
+    },
+    {
+      "num": "14",
+      "name": "Darnell Lloyd IV"
+    },
+    {
+      "num": "15",
+      "name": "Andrew Bhesania"
+    },
+    {
+      "num": "21",
+      "name": "Donte Tisinger Jr."
+    },
+    {
+      "num": "24",
+      "name": "Jelani Easter"
+    },
+    {
+      "num": "25",
+      "name": "EJ Vernon"
+    },
+    {
+      "num": "32",
+      "name": "Quinn Nielsen"
+    },
+    {
+      "num": "34",
+      "name": "Michelangelo Oberti"
+    }
+  ]
+}

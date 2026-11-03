@@ -1,0 +1,89 @@
+{
+  "team": "Harvard",
+  "aliases": [
+    "Crimson"
+  ],
+  "source": "https://gocrimson.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Kenan Parrish"
+    },
+    {
+      "num": "1",
+      "name": "Brandon Burrell"
+    },
+    {
+      "num": "3",
+      "name": "Xavier Nesbitt"
+    },
+    {
+      "num": "4",
+      "name": "Robert Hinton"
+    },
+    {
+      "num": "5",
+      "name": "Ben Eisendrath"
+    },
+    {
+      "num": "7",
+      "name": "Austin Hunt"
+    },
+    {
+      "num": "8",
+      "name": "Tey Barbour"
+    },
+    {
+      "num": "10",
+      "name": "Frankie Mannino"
+    },
+    {
+      "num": "11",
+      "name": "Alex Touomou"
+    },
+    {
+      "num": "12",
+      "name": "Dutch Dowdell"
+    },
+    {
+      "num": "13",
+      "name": "Preston Merrick"
+    },
+    {
+      "num": "15",
+      "name": "Thomas Batties II"
+    },
+    {
+      "num": "18",
+      "name": "Joseph Quartey"
+    },
+    {
+      "num": "21",
+      "name": "Julian Adigun"
+    },
+    {
+      "num": "23",
+      "name": "Jason Singleton"
+    },
+    {
+      "num": "24",
+      "name": "Payton Pitts"
+    },
+    {
+      "num": "31",
+      "name": "Kabir Narasimhan"
+    },
+    {
+      "num": "34",
+      "name": "Ryan Sullivan"
+    },
+    {
+      "num": "35",
+      "name": "Luca Ace-Nasteski"
+    },
+    {
+      "num": "41",
+      "name": "Avner Dror"
+    }
+  ]
+}

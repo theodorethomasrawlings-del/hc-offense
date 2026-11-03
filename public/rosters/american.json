@@ -1,0 +1,78 @@
+{
+  "team": "American",
+  "aliases": [
+    "AU",
+    "Eagles"
+  ],
+  "source": "https://aueagles.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "DJ Sandi"
+    },
+    {
+      "num": "1",
+      "name": "Kamran Prince"
+    },
+    {
+      "num": "2",
+      "name": "Madden Collins"
+    },
+    {
+      "num": "3",
+      "name": "Dean Hogans"
+    },
+    {
+      "num": "4",
+      "name": "Kade Sebastian"
+    },
+    {
+      "num": "5",
+      "name": "Alexander Bryant"
+    },
+    {
+      "num": "7",
+      "name": "Wyatt Nausadis"
+    },
+    {
+      "num": "8",
+      "name": "Jack Anderson"
+    },
+    {
+      "num": "9",
+      "name": "Matthew Casey"
+    },
+    {
+      "num": "13",
+      "name": "Carson McDonald"
+    },
+    {
+      "num": "15",
+      "name": "Merrick Smith"
+    },
+    {
+      "num": "21",
+      "name": "Noah Jones"
+    },
+    {
+      "num": "23",
+      "name": "Greg Jones"
+    },
+    {
+      "num": "25",
+      "name": "Eric Michaels"
+    },
+    {
+      "num": "32",
+      "name": "Julen Iturbe"
+    },
+    {
+      "num": "33",
+      "name": "Matt Mayock"
+    },
+    {
+      "num": "35",
+      "name": "Chris Eagan"
+    }
+  ]
+}

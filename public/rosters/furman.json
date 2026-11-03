@@ -1,0 +1,77 @@
+{
+  "team": "Furman",
+  "aliases": [
+    "Paladins"
+  ],
+  "source": "https://furmanpaladins.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Jordan Butler"
+    },
+    {
+      "num": "1",
+      "name": "Charles Johnston"
+    },
+    {
+      "num": "2",
+      "name": "Abijah Franklin"
+    },
+    {
+      "num": "3",
+      "name": "Jaxson Bell"
+    },
+    {
+      "num": "4",
+      "name": "Jerrin Samuel"
+    },
+    {
+      "num": "5",
+      "name": "Cole Bowser"
+    },
+    {
+      "num": "6",
+      "name": "Nate Wilbourne"
+    },
+    {
+      "num": "7",
+      "name": "Mason Smith"
+    },
+    {
+      "num": "8",
+      "name": "Collin O'Neal"
+    },
+    {
+      "num": "10",
+      "name": "Luka Toews"
+    },
+    {
+      "num": "11",
+      "name": "Cameron Elwer"
+    },
+    {
+      "num": "12",
+      "name": "Tom House"
+    },
+    {
+      "num": "15",
+      "name": "Owen Ritger"
+    },
+    {
+      "num": "23",
+      "name": "Marcus Kell"
+    },
+    {
+      "num": "35",
+      "name": "Nikos Koulisianis"
+    },
+    {
+      "num": "44",
+      "name": "Gunnar Lewis"
+    },
+    {
+      "num": "77",
+      "name": "Davis Molnar"
+    }
+  ]
+}

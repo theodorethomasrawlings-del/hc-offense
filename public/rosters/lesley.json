@@ -1,0 +1,89 @@
+{
+  "team": "Lesley",
+  "aliases": [
+    "Lynx"
+  ],
+  "source": "https://lesleyathletics.com/sports/mbkb/2026-27/roster",
+  "players": [
+    {
+      "num": "0",
+      "name": "Omari Brooks"
+    },
+    {
+      "num": "1",
+      "name": "Eliase Feagins"
+    },
+    {
+      "num": "2",
+      "name": "Sammy Nzeyimana"
+    },
+    {
+      "num": "3",
+      "name": "Mateo Duran"
+    },
+    {
+      "num": "4",
+      "name": "Roni Andujar Jr."
+    },
+    {
+      "num": "10",
+      "name": "Jamarick Preston"
+    },
+    {
+      "num": "11",
+      "name": "Nate Horovitz"
+    },
+    {
+      "num": "12",
+      "name": "Logan Talbot"
+    },
+    {
+      "num": "13",
+      "name": "Daemon \"DT\" Thomas"
+    },
+    {
+      "num": "14",
+      "name": "Michael Koehler"
+    },
+    {
+      "num": "15",
+      "name": "Ryan Ellis"
+    },
+    {
+      "num": "20",
+      "name": "Chase VanHoorebeke"
+    },
+    {
+      "num": "21",
+      "name": "Khai Francis"
+    },
+    {
+      "num": "22",
+      "name": "Jaden Washington"
+    },
+    {
+      "num": "23",
+      "name": "Mpore Semuhoza"
+    },
+    {
+      "num": "24",
+      "name": "Moses Semuhoza"
+    },
+    {
+      "num": "30",
+      "name": "Christian McNeil"
+    },
+    {
+      "num": "33",
+      "name": "Tanner Sarchet"
+    },
+    {
+      "num": "55",
+      "name": "Ethan Arnold"
+    },
+    {
+      "num": "88",
+      "name": "Hunter Treanor"
+    }
+  ]
+}

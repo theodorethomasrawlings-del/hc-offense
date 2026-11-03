@@ -1,0 +1,65 @@
+{
+  "team": "Villanova",
+  "aliases": [
+    "Nova"
+  ],
+  "source": "https://villanova.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "1",
+      "name": "Elijah Crawford"
+    },
+    {
+      "num": "2",
+      "name": "Brady Muller"
+    },
+    {
+      "num": "3",
+      "name": "Matt Hodge"
+    },
+    {
+      "num": "4",
+      "name": "Tyler Perkins"
+    },
+    {
+      "num": "5",
+      "name": "Carter Fisk"
+    },
+    {
+      "num": "7",
+      "name": "Adam Oumiddoch"
+    },
+    {
+      "num": "8",
+      "name": "Darryl Simmons II"
+    },
+    {
+      "num": "9",
+      "name": "Abdou Samb"
+    },
+    {
+      "num": "10",
+      "name": "Kwame Evans Jr."
+    },
+    {
+      "num": "14",
+      "name": "Wade Chiddick"
+    },
+    {
+      "num": "15",
+      "name": "Nico Onyekwere"
+    },
+    {
+      "num": "19",
+      "name": "Luigi Suigo"
+    },
+    {
+      "num": "21",
+      "name": "Devin Royal"
+    },
+    {
+      "num": "22",
+      "name": "Jake Fiegen"
+    }
+  ]
+}

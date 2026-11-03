@@ -1,0 +1,75 @@
+{
+  "team": "Loyola Maryland",
+  "aliases": [
+    "Loyola MD",
+    "Loyola",
+    "Greyhounds"
+  ],
+  "source": "https://loyolagreyhounds.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "D'Andre Harrison"
+    },
+    {
+      "num": "1",
+      "name": "Max Ortega"
+    },
+    {
+      "num": "2",
+      "name": "Troy Cicero Jr."
+    },
+    {
+      "num": "3",
+      "name": "Robbie Long III"
+    },
+    {
+      "num": "4",
+      "name": "Seamus Bieg"
+    },
+    {
+      "num": "5",
+      "name": "Carter Berg-McLean"
+    },
+    {
+      "num": "7",
+      "name": "Ezekiel Walker"
+    },
+    {
+      "num": "8",
+      "name": "Goap Kodi"
+    },
+    {
+      "num": "9",
+      "name": "Mason Hagedorn"
+    },
+    {
+      "num": "12",
+      "name": "Alex Huguet"
+    },
+    {
+      "num": "13",
+      "name": "Sebastien Emenalo"
+    },
+    {
+      "num": "14",
+      "name": "Abdullah Amzil"
+    },
+    {
+      "num": "17",
+      "name": "Everett Barnes"
+    },
+    {
+      "num": "22",
+      "name": "Sam Springer"
+    },
+    {
+      "num": "24",
+      "name": "Gage Howard Jr."
+    },
+    {
+      "num": "33",
+      "name": "Leo Ricketts"
+    }
+  ]
+}

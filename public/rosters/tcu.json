@@ -1,0 +1,69 @@
+{
+  "team": "TCU",
+  "aliases": [
+    "Horned Frogs"
+  ],
+  "source": "https://gofrogs.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Trent Lincoln"
+    },
+    {
+      "num": "2",
+      "name": "Brock Harding"
+    },
+    {
+      "num": "5",
+      "name": "Micah Robinson"
+    },
+    {
+      "num": "8",
+      "name": "Ricards Aizpurs"
+    },
+    {
+      "num": "9",
+      "name": "Luke Bamgboye"
+    },
+    {
+      "num": "10",
+      "name": "Milo\u0161 \u0160oji\u0107"
+    },
+    {
+      "num": "11",
+      "name": "Gavin Sykes"
+    },
+    {
+      "num": "15",
+      "name": "DJ Thomas"
+    },
+    {
+      "num": "22",
+      "name": "Jack Wegman"
+    },
+    {
+      "num": "23",
+      "name": "Sam Fleming"
+    },
+    {
+      "num": "24",
+      "name": "Xavier Edmonds"
+    },
+    {
+      "num": "30",
+      "name": "Drew McElroy"
+    },
+    {
+      "num": "33",
+      "name": "Ryan Hunt"
+    },
+    {
+      "num": "35",
+      "name": "Gavin Murphy"
+    },
+    {
+      "num": "55",
+      "name": "Tanner Toolson"
+    }
+  ]
+}

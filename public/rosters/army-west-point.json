@@ -1,0 +1,74 @@
+{
+  "team": "Army West Point",
+  "aliases": [
+    "Army",
+    "Black Knights"
+  ],
+  "source": "https://goarmywestpoint.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "1",
+      "name": "Deke Cooper Jr."
+    },
+    {
+      "num": "2",
+      "name": "Ryan Curry"
+    },
+    {
+      "num": "3",
+      "name": "Jaden Ellis"
+    },
+    {
+      "num": "4",
+      "name": "Henry Rasmussen"
+    },
+    {
+      "num": "5",
+      "name": "Patrick McDonough"
+    },
+    {
+      "num": "10",
+      "name": "Jacen Holloway"
+    },
+    {
+      "num": "12",
+      "name": "Dylan Murans"
+    },
+    {
+      "num": "13",
+      "name": "Dillon Watt"
+    },
+    {
+      "num": "14",
+      "name": "Brendon O'Keefe"
+    },
+    {
+      "num": "22",
+      "name": "Kevin McCarthy"
+    },
+    {
+      "num": "23",
+      "name": "Dylan Benner"
+    },
+    {
+      "num": "25",
+      "name": "Jahaan Green"
+    },
+    {
+      "num": "32",
+      "name": "Tate Laczkowski"
+    },
+    {
+      "num": "33",
+      "name": "Michael Masini"
+    },
+    {
+      "num": "34",
+      "name": "Nnaemeka Ikechi"
+    },
+    {
+      "num": "44",
+      "name": "Parker Henderson"
+    }
+  ]
+}

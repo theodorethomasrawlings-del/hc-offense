@@ -1,0 +1,74 @@
+{
+  "team": "New Hampshire",
+  "aliases": [
+    "UNH",
+    "Wildcats"
+  ],
+  "source": "https://unhwildcats.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Tyler Bike"
+    },
+    {
+      "num": "1",
+      "name": "Jeremiah Faumuina"
+    },
+    {
+      "num": "2",
+      "name": "Erik Oliver-Bush"
+    },
+    {
+      "num": "3",
+      "name": "Parth Miglani"
+    },
+    {
+      "num": "4",
+      "name": "Myles Blackley"
+    },
+    {
+      "num": "5",
+      "name": "Drew McKenna"
+    },
+    {
+      "num": "6",
+      "name": "Giannos Xanthopoulos"
+    },
+    {
+      "num": "7",
+      "name": "John Squire"
+    },
+    {
+      "num": "8",
+      "name": "Nick Sangermano II"
+    },
+    {
+      "num": "10",
+      "name": "Adam Squire"
+    },
+    {
+      "num": "11",
+      "name": "Josiah Coleman"
+    },
+    {
+      "num": "15",
+      "name": "Davide Poser"
+    },
+    {
+      "num": "21",
+      "name": "Ryan Zan"
+    },
+    {
+      "num": "22",
+      "name": "Kaleb Myers"
+    },
+    {
+      "num": "24",
+      "name": "Jon O'Neill"
+    },
+    {
+      "num": "",
+      "name": "Will Gustafson"
+    }
+  ]
+}

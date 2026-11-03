@@ -1,0 +1,79 @@
+{
+  "team": "Texas A&M",
+  "aliases": [
+    "A&M",
+    "Aggies",
+    "TAMU"
+  ],
+  "source": "https://12thman.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Jordan Pope"
+    },
+    {
+      "num": "1",
+      "name": "Jalen Shelley"
+    },
+    {
+      "num": "2",
+      "name": "Jalen Reece"
+    },
+    {
+      "num": "3",
+      "name": "Neiko Mundey"
+    },
+    {
+      "num": "4",
+      "name": "PJ Haggerty"
+    },
+    {
+      "num": "5",
+      "name": "Rylan Griffen"
+    },
+    {
+      "num": "6",
+      "name": "Preston Clark"
+    },
+    {
+      "num": "7",
+      "name": "Zach Clemence"
+    },
+    {
+      "num": "8",
+      "name": "Tyshawn Archie"
+    },
+    {
+      "num": "9",
+      "name": "Jamie Vinson"
+    },
+    {
+      "num": "10",
+      "name": "Jeremiah Green"
+    },
+    {
+      "num": "12",
+      "name": "Cade Phillips"
+    },
+    {
+      "num": "14",
+      "name": "Chris McDermott"
+    },
+    {
+      "num": "15",
+      "name": "Kyle Moran"
+    },
+    {
+      "num": "21",
+      "name": "Mackenzie Mgbako"
+    },
+    {
+      "num": "23",
+      "name": "Josh Irving"
+    },
+    {
+      "num": "24",
+      "name": "Lukas Walls"
+    }
+  ]
+}

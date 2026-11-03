@@ -1,0 +1,73 @@
+{
+  "team": "Lafayette",
+  "aliases": [
+    "Leopards"
+  ],
+  "source": "https://goleopards.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Cooper Kesler"
+    },
+    {
+      "num": "1",
+      "name": "Beckett Currie"
+    },
+    {
+      "num": "2",
+      "name": "KaiMani Murdock"
+    },
+    {
+      "num": "3",
+      "name": "Shelton Henton"
+    },
+    {
+      "num": "4",
+      "name": "AJ Collins"
+    },
+    {
+      "num": "5",
+      "name": "Patrick D'Arcy"
+    },
+    {
+      "num": "11",
+      "name": "Luke Azzinaro"
+    },
+    {
+      "num": "13",
+      "name": "Jasraj Gill"
+    },
+    {
+      "num": "14",
+      "name": "Malik Rasul"
+    },
+    {
+      "num": "15",
+      "name": "Owen Kelly"
+    },
+    {
+      "num": "20",
+      "name": "Ashton Wallace"
+    },
+    {
+      "num": "24",
+      "name": "Folabomi Fayemi"
+    },
+    {
+      "num": "33",
+      "name": "Misha Bednostin"
+    },
+    {
+      "num": "34",
+      "name": "Luke Bevilacqua"
+    },
+    {
+      "num": "44",
+      "name": "Shareef Jackson"
+    },
+    {
+      "num": "55",
+      "name": "Aaron Sievert"
+    }
+  ]
+}

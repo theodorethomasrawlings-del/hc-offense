@@ -1,0 +1,74 @@
+{
+  "team": "Rhode Island",
+  "aliases": [
+    "URI",
+    "Rhody"
+  ],
+  "source": "https://gorhody.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Jahmere Tripp"
+    },
+    {
+      "num": "1",
+      "name": "Jason Fontenet II"
+    },
+    {
+      "num": "2",
+      "name": "Jaen Chatman"
+    },
+    {
+      "num": "4",
+      "name": "Dylan Williamson"
+    },
+    {
+      "num": "5",
+      "name": "Jonah Hinton"
+    },
+    {
+      "num": "6",
+      "name": "Steven Sherman"
+    },
+    {
+      "num": "7",
+      "name": "Jalen Harper"
+    },
+    {
+      "num": "9",
+      "name": "Nedas Raupelis"
+    },
+    {
+      "num": "10",
+      "name": "Barrett Loer"
+    },
+    {
+      "num": "11",
+      "name": "Javon Perry"
+    },
+    {
+      "num": "13",
+      "name": "Jaymien Aponte"
+    },
+    {
+      "num": "14",
+      "name": "Tim Martin II"
+    },
+    {
+      "num": "21",
+      "name": "Miftah Ibiyemi"
+    },
+    {
+      "num": "31",
+      "name": "Dashiell Mabilon"
+    },
+    {
+      "num": "35",
+      "name": "Mouhamed Sow"
+    },
+    {
+      "num": "44",
+      "name": "Matas Deniusas"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "team": "Stonehill",
+  "aliases": [
+    "Skyhawks"
+  ],
+  "source": "https://stonehillskyhawks.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "1",
+      "name": "Eli Greenberg"
+    },
+    {
+      "num": "2",
+      "name": "Trenton Ruth"
+    },
+    {
+      "num": "3",
+      "name": "Will Batchelder"
+    },
+    {
+      "num": "4",
+      "name": "Anquan Boldin Jr."
+    },
+    {
+      "num": "5",
+      "name": "Jack Medalie"
+    },
+    {
+      "num": "10",
+      "name": "Kemar Grant"
+    },
+    {
+      "num": "11",
+      "name": "Amare Allen"
+    },
+    {
+      "num": "12",
+      "name": "Felipe Patino"
+    },
+    {
+      "num": "13",
+      "name": "Andre Langley"
+    },
+    {
+      "num": "15",
+      "name": "Norbu Jenpa"
+    },
+    {
+      "num": "20",
+      "name": "Ewan Steele"
+    },
+    {
+      "num": "21",
+      "name": "Colin Byrne"
+    },
+    {
+      "num": "22",
+      "name": "Devon Arlington"
+    },
+    {
+      "num": "31",
+      "name": "Pearse McGuinn"
+    },
+    {
+      "num": "32",
+      "name": "Benicio Leons"
+    },
+    {
+      "num": "34",
+      "name": "Danny Cheng"
+    }
+  ]
+}

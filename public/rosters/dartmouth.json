@@ -1,0 +1,65 @@
+{
+  "team": "Dartmouth",
+  "aliases": [
+    "Big Green"
+  ],
+  "source": "https://dartmouthsports.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Ben Brown"
+    },
+    {
+      "num": "1",
+      "name": "CJ Aldrich III"
+    },
+    {
+      "num": "2",
+      "name": "Landon Williams"
+    },
+    {
+      "num": "4",
+      "name": "Dan Civello"
+    },
+    {
+      "num": "5",
+      "name": "Cameron McNamee"
+    },
+    {
+      "num": "7",
+      "name": "Patrick Tivnan Jr."
+    },
+    {
+      "num": "10",
+      "name": "Anton Strelnikov"
+    },
+    {
+      "num": "11",
+      "name": "Cam Hiatt"
+    },
+    {
+      "num": "12",
+      "name": "Jake Pollack"
+    },
+    {
+      "num": "13",
+      "name": "Ernas Valauskas"
+    },
+    {
+      "num": "15",
+      "name": "Acen Jimenez"
+    },
+    {
+      "num": "23",
+      "name": "Nikola Abusara"
+    },
+    {
+      "num": "44",
+      "name": "Shanon Simango"
+    },
+    {
+      "num": "50",
+      "name": "Tyler Garrett"
+    }
+  ]
+}

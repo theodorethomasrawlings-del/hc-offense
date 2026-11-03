@@ -1,0 +1,65 @@
+{
+  "team": "Colgate",
+  "aliases": [
+    "Raiders"
+  ],
+  "source": "http://gocolgateraiders.com/sports/mens-basketball/roster/2026-27",
+  "players": [
+    {
+      "num": "0",
+      "name": "Ethan Brown"
+    },
+    {
+      "num": "2",
+      "name": "Blake Forrest"
+    },
+    {
+      "num": "3",
+      "name": "Kingston McKoy"
+    },
+    {
+      "num": "4",
+      "name": "Josh Ahayere"
+    },
+    {
+      "num": "5",
+      "name": "Charlie Pugh"
+    },
+    {
+      "num": "7",
+      "name": "Isaiah Skinn"
+    },
+    {
+      "num": "8",
+      "name": "Jonathan Niv"
+    },
+    {
+      "num": "9",
+      "name": "Cameron Brennan"
+    },
+    {
+      "num": "10",
+      "name": "Parker Jones"
+    },
+    {
+      "num": "15",
+      "name": "Ayomi Odetoyinbo"
+    },
+    {
+      "num": "21",
+      "name": "Jayden Harrington"
+    },
+    {
+      "num": "22",
+      "name": "Andrew Alekseyenko"
+    },
+    {
+      "num": "23",
+      "name": "Cooper Wright"
+    },
+    {
+      "num": "33",
+      "name": "Sam Wright"
+    }
+  ]
+}
