@@ -77,12 +77,12 @@ function TeamColumn({ game, side, half, editing, draft, setDraft }: { game: Game
   const tos = side === 'us' ? game.hcTimeouts : game.oppTimeouts
   const halves: Half[] = game.halfEnds.length >= 2 || half === 3 ? [1, 2, 3] : [1, 2]
   return (
-    <section className="panel grid" style={{ gap: 10, alignContent: 'start', minWidth: 0 }} aria-label={`${name} fouls`}>
+    <section className="panel team" aria-label={`${name} fouls`}>
       <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap' }}>
         <h2 style={{ color: 'var(--fg)', fontSize: 22 }}>{name}</h2>
         <Timeouts used={tos} half={half} label={name} onUse={(k) => void (side === 'us' ? g.hcTimeout(k) : g.oppTimeout(k))} onUndo={() => void (side === 'us' ? g.undoHcTimeout() : g.undoOppTimeout())} />
       </div>
-      <div className="grid" style={{ gap: 6 }}>
+      <div className="grid team-fouls" style={{ gap: 4 }}>
         {halves.map((h) => (
           <div className="row" key={h} style={{ gap: 8 }}>
             <span className={`muted ${h === half ? 'now' : ''}`} style={{ width: 44, fontSize: 15, fontWeight: h === half ? 800 : 500 }}>
@@ -97,9 +97,9 @@ function TeamColumn({ game, side, half, editing, draft, setDraft }: { game: Game
       ) : roster.length === 0 ? (
         <div className="muted">No roster loaded. Tap Edit rosters to add players.</div>
       ) : (
-        <div className="grid" style={{ gap: 4 }}>
+        <div className="players">
           {roster.map((p) => (
-            <div className={`row player ${p.fouls >= 5 ? 'out' : ''}`} key={p.num + p.name} style={{ gap: 8 }}>
+            <div className={`row player ${p.fouls >= 5 ? 'out' : ''}`} key={p.num + p.name} style={{ gap: 6 }}>
               <span className="num">{p.num}</span>
               <span className="name">{p.name}</span>
               <Boxes count={p.fouls} max={5} label={`${name} ${p.num} fouls`} warnAt={4} outAt={5} onSet={(n) => void g.setPlayerFouls(side, p.num, n)} />

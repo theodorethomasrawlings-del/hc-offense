@@ -131,24 +131,38 @@ th:first-child, td:first-child { text-align: left; }
   .step .btn { min-height: 52px !important; }
 }
 
-/* Foul chart boxes */
+/* Foul chart: everything fits one screen, nothing scrolls sideways. Rows and boxes shrink to the space they have. */
+.fouls { overflow: hidden; }
+.fouls .scroll { overflow: hidden; height: 100%; min-height: 0; }
+.fouls .grid.two { grid-template-rows: minmax(0, 1fr); min-height: 0; }
+.fouls section.team { overflow: hidden; display: grid; grid-template-rows: auto auto minmax(0, 1fr); gap: 8px; padding: 10px 12px; min-height: 0; }
+.fouls .team-fouls .row { flex-wrap: nowrap; }
+.fouls .players { display: grid; grid-auto-rows: minmax(0, 1fr); gap: 2px; min-height: 0; }
+.fouls .player { min-height: 0; height: 100%; flex-wrap: nowrap; }
+.fouls .player [role='group'] { flex: 0 0 42%; height: 100%; max-height: 34px; }
+.fouls [role='group'] { flex-wrap: nowrap; min-width: 0; }
 .box {
-  width: 38px; height: 36px; border-radius: 8px; border: 2px solid color-mix(in srgb, var(--muted) 45%, transparent);
-  background: var(--panel2); color: var(--muted); font-size: 16px; font-weight: 700; padding: 0; cursor: pointer; flex-shrink: 0;
+  flex: 1 1 0; min-width: 0; height: 100%; min-height: 22px; max-height: 36px; border-radius: 6px;
+  border: 2px solid color-mix(in srgb, var(--muted) 45%, transparent);
+  background: var(--panel2); color: var(--muted); font-size: clamp(11px, 1.8vh, 15px); font-weight: 700; padding: 0; cursor: pointer;
 }
 .box.on { background: var(--accent); border-color: var(--accent); color: #fff; }
 .box.on.warn { background: var(--warn); border-color: var(--warn); color: #000; }
 .box.on.out { background: var(--score); border-color: var(--score); color: #000; }
-.box.to { width: 52px; }
+.box.to { flex: 0 0 44px; height: 32px; }
 .box.to.circle { border-radius: 50%; }
 .box.to.lost { opacity: 0.3; text-decoration: line-through; }
-.player { min-height: 38px; }
-.player .num { width: 34px; text-align: right; font-weight: 800; font-size: 18px; flex-shrink: 0; }
-.player .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 17px; }
+.team-fouls .box { height: 30px; }
+.player { min-height: 0; }
+.player .num { width: 30px; text-align: right; font-weight: 800; font-size: clamp(12px, 2vh, 17px); flex-shrink: 0; }
+.player .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: clamp(12px, 2vh, 16px); }
 .player.out .name, .player.out .num { color: var(--score); text-decoration: line-through; }
-.fouls .scroll { overflow-y: auto; }
 @media (max-width: 900px) {
-  .box { width: 32px; height: 36px; font-size: 14px; }
-  .box.to { width: 44px; }
-  .player .name { font-size: 15px; }
+  /* Phone: teams stack, page scrolls down only, never sideways. */
+  .fouls { overflow-x: hidden; }
+  .fouls .scroll { overflow: visible; height: auto; }
+  .fouls section.team { display: grid; grid-template-rows: auto; }
+  .fouls .players { grid-auto-rows: 30px; }
+  .fouls .player [role='group'] { height: 28px; }
+  .box.to { flex: 0 0 38px; height: 30px; }
 }
