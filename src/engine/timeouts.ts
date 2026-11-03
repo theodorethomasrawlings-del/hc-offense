@@ -12,8 +12,13 @@ export interface TimeoutsLeft {
 }
 
 export function hcTimeoutsLeft(game: Pick<Game, 'hcTimeouts'>, half: Half): TimeoutsLeft {
+  return timeoutsLeft(game.hcTimeouts, half)
+}
+
+/** Same rules for either team. */
+export function timeoutsLeft(used_: { half: Half; kind?: TimeoutKind }[], half: Half): TimeoutsLeft {
   const used = (kind: TimeoutKind, halves: Half[]) =>
-    game.hcTimeouts.filter((t) => (t.kind ?? 'FULL') === kind && halves.includes(t.half)).length
+    used_.filter((t) => (t.kind ?? 'FULL') === kind && halves.includes(t.half)).length
   const full = Math.max(0, FULL_PER_GAME - used('FULL', [1, 2, 3]))
   if (half === 1) return { full, thirty: Math.max(0, THIRTY_PER_GAME - used('THIRTY', [1])) }
   let thirty = Math.max(0, THIRTY_PER_GAME - used('THIRTY', [1]))

@@ -1,10 +1,11 @@
 import { create } from 'zustand'
 import { db, newId } from '../db/db'
 import { chunkPoints } from '../domain/labels'
-import type { Chunk, Continuation, Draft, Game, Half, Possession, TimeoutKind } from '../domain/types'
+import type { Chunk, Continuation, Draft, Game, Half, Player, Possession, Side, TimeoutKind } from '../domain/types'
 import { tagPossessions, type Tagged } from '../engine/streaks'
 
-export type GameSetup = Omit<Game, 'id' | 'timeouts' | 'hcTimeouts' | 'halfEnds' | 'status' | 'createdAt'>
+export type GameSetup = Omit<Game, 'id' | 'timeouts' | 'hcTimeouts' | 'oppTimeouts' | 'halfEnds' | 'status' | 'createdAt' | 'teamFouls' | 'rosterUs' | 'rosterThem' | 'arrowUs'> &
+  Partial<Pick<Game, 'rosterUs' | 'rosterThem' | 'arrowUs'>>
 
 export interface GameState {
   game: Game | null
@@ -28,13 +29,32 @@ export interface GameState {
   hcTimeout(kind?: TimeoutKind): Promise<void>
   endHalf(): Promise<void>
   endGame(): Promise<void>
+  /** Foul chart. */
+  setRosters(us: Player[], them: Player[]): Promise<void>
+  /** Set a player's personal fouls; a rise also adds a team foul in the current half, a drop removes one. */
+  setPlayerFouls(side: Side, num: string, fouls: number): Promise<void>
+  setTeamFouls(side: Side, half: Half, fouls: number): Promise<void>
+  oppTimeout(kind?: TimeoutKind): Promise<void>
+  undoOppTimeout(): Promise<void>
+  undoHcTimeout(): Promise<void>
+  toggleArrow(): Promise<void>
   currentHalf(): Half
   currentSegment(): number
   nextN(): number
 }
 
 export function normalizeGame(g: Game): Game {
-  return { ...g, timeouts: g.timeouts ?? [], hcTimeouts: g.hcTimeouts ?? [], halfEnds: g.halfEnds ?? [] }
+  return {
+    ...g,
+    timeouts: g.timeouts ?? [],
+    hcTimeouts: g.hcTimeouts ?? [],
+    oppTimeouts: g.oppTimeouts ?? [],
+    halfEnds: g.halfEnds ?? [],
+    rosterUs: (g.rosterUs ?? []).map((p) => ({ ...p, fouls: p.fouls ?? 0 })),
+    rosterThem: (g.rosterThem ?? []).map((p) => ({ ...p, fouls: p.fouls ?? 0 })),
+    teamFouls: { us: g.teamFouls?.us ?? [0, 0, 0], them: g.teamFouls?.them ?? [0, 0, 0] },
+    arrowUs: g.arrowUs ?? true,
+  }
 }
 
 export function normalizePossession(p: Possession): Possession {
@@ -131,7 +151,7 @@ export function createGameStore() {
       },
 
       async startGame(g) {
-        const game: Game = { ...g, id: newId(), timeouts: [], hcTimeouts: [], halfEnds: [], status: 'LIVE', createdAt: Date.now() }
+        const game: Game = normalizeGame({ ...g, id: newId(), timeouts: [], hcTimeouts: [], oppTimeouts: [], halfEnds: [], teamFouls: { us: [0, 0, 0], them: [0, 0, 0] }, status: 'LIVE', createdAt: Date.now() } as Game)
         await db.games.put(game)
         set({ game, possessions: [], tagged: [], draft: {}, loaded: true })
       },
@@ -246,6 +266,56 @@ export function createGameStore() {
 
       async endGame() {
         await putGame({ status: 'FINAL' })
+      },
+
+      async setRosters(us, them) {
+        await putGame({ rosterUs: us, rosterThem: them })
+      },
+
+      async setPlayerFouls(side, num, fouls) {
+        const game = get().game
+        if (!game) return
+        const key = side === 'us' ? 'rosterUs' : 'rosterThem'
+        const roster = game[key]
+        const i = roster.findIndex((p) => p.num === num)
+        if (i < 0) return
+        const next = Math.max(0, Math.min(5, fouls))
+        const delta = next - roster[i].fouls
+        const half = get().currentHalf()
+        const tf = { ...game.teamFouls, [side]: [...game.teamFouls[side]] }
+        tf[side][half - 1] = Math.max(0, Math.min(10, tf[side][half - 1] + delta))
+        await putGame({ [key]: roster.map((p, j) => (j === i ? { ...p, fouls: next } : p)), teamFouls: tf })
+      },
+
+      async setTeamFouls(side, half, fouls) {
+        const game = get().game
+        if (!game) return
+        const tf = { ...game.teamFouls, [side]: [...game.teamFouls[side]] }
+        tf[side][half - 1] = Math.max(0, Math.min(10, fouls))
+        await putGame({ teamFouls: tf })
+      },
+
+      async oppTimeout(kind = 'THIRTY') {
+        const game = get().game
+        if (!game) return
+        await putGame({ oppTimeouts: [...game.oppTimeouts, { n: lastN(), half: get().currentHalf(), kind }] })
+      },
+
+      async undoOppTimeout() {
+        const game = get().game
+        if (!game || !game.oppTimeouts.length) return
+        await putGame({ oppTimeouts: game.oppTimeouts.slice(0, -1) })
+      },
+
+      async undoHcTimeout() {
+        const game = get().game
+        if (!game || !game.hcTimeouts.length) return
+        await putGame({ hcTimeouts: game.hcTimeouts.slice(0, -1) })
+      },
+
+      async toggleArrow() {
+        const game = get().game
+        if (game) await putGame({ arrowUs: !game.arrowUs })
       },
 
       currentHalf() {

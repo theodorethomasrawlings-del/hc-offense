@@ -72,11 +72,28 @@ export interface Possession {
   createdAt: number
 }
 
+export interface Player {
+  num: string
+  name: string
+  fouls: number
+}
+
+export type Side = 'us' | 'them'
+
 export interface Game {
   id: string
   opponent: string
   date: string
   home: boolean
+  /** Foul chart: our roster and theirs, with personal fouls. */
+  rosterUs: Player[]
+  rosterThem: Player[]
+  /** Team fouls by half (index 0 = 1st, 1 = 2nd, 2 = OT). */
+  teamFouls: { us: number[]; them: number[] }
+  /** Opponent timeouts used, like hcTimeouts. */
+  oppTimeouts: { n: number; half: Half; kind: TimeoutKind }[]
+  /** Possession arrow points to us. */
+  arrowUs: boolean
   /** Media timeouts: after possession n. */
   timeouts: number[]
   /** Holy Cross timeouts: after possession n, in half. */

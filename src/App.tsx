@@ -6,12 +6,14 @@ import History from './screens/History'
 import GameDetail from './screens/GameDetail'
 import Trends from './screens/Trends'
 import Settings from './screens/Settings'
+import FoulChart from './screens/FoulChart'
 
 export const routes = [
   { path: '/', element: <Navigate to="/setup" replace /> },
   { path: '/setup', element: <Setup /> },
   { path: '/game', element: <Game /> },
   { path: '/summary', element: <Summary /> },
+  { path: '/fouls', element: <FoulChart /> },
   { path: '/history', element: <History /> },
   { path: '/history/:id', element: <GameDetail /> },
   { path: '/trends', element: <Trends /> },

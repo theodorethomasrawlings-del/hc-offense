@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import type { Game, Half } from '../domain/types'
 import type { Tagged } from '../engine/streaks'
 import { fmtPct, fmtPPP } from '../engine/format'
@@ -23,8 +24,11 @@ export function streakBadge(last: Tagged | undefined): { text: string; tone: 'st
 const halfLabel = (h: Half) => (h === 3 ? 'OT' : `${h}${h === 1 ? 'st' : 'nd'}`)
 
 export default function Header({ game, tagged, n, half }: Props) {
+  const nav = useNavigate()
   const g = stats(tagged)
   const badge = streakBadge(tagged[tagged.length - 1])
+  const tf = (s: number[]) => s[half - 1] ?? 0
+  const out = (ps: Game['rosterUs']) => ps.filter((p) => p.fouls >= 5).length
   return (
     <header className="grid" style={{ gap: 6 }}>
       <div className="row" style={{ minHeight: 48, flexWrap: 'wrap', gap: 6 }}>
@@ -44,6 +48,10 @@ export default function Header({ game, tagged, n, half }: Props) {
         <span className="badge" aria-label="timeouts left">
           TO {fmtTimeouts(hcTimeoutsLeft(game, half))}
         </span>
+        <button className="btn chip" style={{ fontWeight: 800 }} onClick={() => nav('/fouls')} aria-label="foul chart">
+          FOULS HC {tf(game.teamFouls.us)} · {game.opponent.toUpperCase().slice(0, 8)} {tf(game.teamFouls.them)}
+          {out(game.rosterUs) + out(game.rosterThem) > 0 && ` · ${out(game.rosterUs) + out(game.rosterThem)} OUT`} · ARROW {game.arrowUs ? 'US' : 'THEM'}
+        </button>
       </div>
       <div className="row" style={{ flexWrap: 'wrap' }}>
         <QuickAsk tagged={tagged} game={game} />

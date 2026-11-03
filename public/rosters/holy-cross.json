@@ -1,0 +1,22 @@
+{
+  "team": "Holy Cross",
+  "aliases": ["HC", "Crusaders"],
+  "players": [
+    { "num": "0", "name": "Arius Alijosius" },
+    { "num": "1", "name": "Elijah Flowers" },
+    { "num": "2", "name": "Jude Haigh" },
+    { "num": "3", "name": "Kole Hanson" },
+    { "num": "4", "name": "John St. Germain III" },
+    { "num": "5", "name": "Ethan Clark" },
+    { "num": "10", "name": "Tristen Wilson" },
+    { "num": "12", "name": "Bradyn Foster" },
+    { "num": "15", "name": "Kosi Mgbejiofor" },
+    { "num": "21", "name": "Jaelon Germany" },
+    { "num": "22", "name": "Chuck Hare" },
+    { "num": "23", "name": "Aidan Richard" },
+    { "num": "30", "name": "Joe Nugent" },
+    { "num": "33", "name": "Austin Mejia" },
+    { "num": "34", "name": "Declan Ryan" },
+    { "num": "35", "name": "Liam Rigney" }
+  ]
+}

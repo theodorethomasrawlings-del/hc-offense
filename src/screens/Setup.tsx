@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Nav from '../components/Nav'
+import { loadRoster } from '../rosters/loadRoster'
 import { useGameStore } from '../store/gameStore'
 import { useSettings } from '../store/settingsStore'
 
@@ -13,6 +14,7 @@ export default function Setup() {
   const [date, setDate] = useState(today())
   const [home, setHome] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [starting, setStarting] = useState(false)
 
   const settings = useSettings()
   useEffect(() => {
@@ -23,9 +25,16 @@ export default function Setup() {
   const live = game?.status === 'LIVE'
 
   const start = async () => {
-    if (live) await endGame()
-    await startGame({ opponent: opponent.trim() || 'Opponent', date, home })
-    nav('/game')
+    setStarting(true)
+    try {
+      const name = opponent.trim() || 'Opponent'
+      const [rosterUs, rosterThem] = await Promise.all([loadRoster('Holy Cross'), loadRoster(name)])
+      if (live) await endGame()
+      await startGame({ opponent: name, date, home, rosterUs, rosterThem })
+      nav('/game')
+    } finally {
+      setStarting(false)
+    }
   }
 
   return (
@@ -72,9 +81,10 @@ export default function Setup() {
               Away
             </button>
           </div>
-          <button className="btn primary" onClick={start}>
-            Start game
+          <button className="btn primary" onClick={start} disabled={starting}>
+            {starting ? 'Loading rosters...' : 'Start game'}
           </button>
+          <div className="muted" style={{ fontSize: 15 }}>Rosters load by the opponent's name (URI, Villanova, Furman...). Edit them on the foul chart if needed.</div>
         </div>
       )}
     </main>

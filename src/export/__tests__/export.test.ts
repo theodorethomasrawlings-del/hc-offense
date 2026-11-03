@@ -6,7 +6,7 @@ import { toCSV } from '../csv'
 import { toText } from '../text'
 import { toWorkbook } from '../xlsx'
 
-const game: Game = { id: 'g', opponent: 'Siena', date: '2026-11-02', home: true, timeouts: [], hcTimeouts: [], halfEnds: [], status: 'FINAL', createdAt: 0 }
+const game: Game = { id: 'g', opponent: 'Siena', date: '2026-11-02', home: true, timeouts: [], hcTimeouts: [], oppTimeouts: [], halfEnds: [], rosterUs: [], rosterThem: [], teamFouls: { us: [0, 0, 0], them: [0, 0, 0] }, arrowUs: true, status: 'FINAL', createdAt: 0 }
 beforeEach(reset)
 const ts = () =>
   tagPossessions([

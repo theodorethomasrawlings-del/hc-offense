@@ -130,3 +130,25 @@ th:first-child, td:first-child { text-align: left; }
   .question { font-size: 20px; }
   .step .btn { min-height: 52px !important; }
 }
+
+/* Foul chart boxes */
+.box {
+  width: 38px; height: 36px; border-radius: 8px; border: 2px solid color-mix(in srgb, var(--muted) 45%, transparent);
+  background: var(--panel2); color: var(--muted); font-size: 16px; font-weight: 700; padding: 0; cursor: pointer; flex-shrink: 0;
+}
+.box.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.box.on.warn { background: var(--warn); border-color: var(--warn); color: #000; }
+.box.on.out { background: var(--score); border-color: var(--score); color: #000; }
+.box.to { width: 52px; }
+.box.to.circle { border-radius: 50%; }
+.box.to.lost { opacity: 0.3; text-decoration: line-through; }
+.player { min-height: 38px; }
+.player .num { width: 34px; text-align: right; font-weight: 800; font-size: 18px; flex-shrink: 0; }
+.player .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 17px; }
+.player.out .name, .player.out .num { color: var(--score); text-decoration: line-through; }
+.fouls .scroll { overflow-y: auto; }
+@media (max-width: 900px) {
+  .box { width: 32px; height: 36px; font-size: 14px; }
+  .box.to { width: 44px; }
+  .player .name { font-size: 15px; }
+}
