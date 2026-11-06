@@ -104,9 +104,8 @@ export function draftChunk(d: Draft): Chunk {
 
 /** Does the draft describe a finished chunk? A shot needs a result; a TO or foul stands alone. */
 export function draftComplete(d: Draft): boolean {
-  if (!d.result || d.result === 'NONE') return false
-  if (d.result === 'MADE' || d.result === 'MISSED') return !!d.shot && d.shot !== 'NONE'
-  return true
+  // Made / missed / turnover is enough; the shot location is optional (the full chart at /v1/ records it).
+  return !!d.result && d.result !== 'NONE'
 }
 
 /** Sum the chunks into the possession's top-level fields. Shot, result and play come from the last chunk. */

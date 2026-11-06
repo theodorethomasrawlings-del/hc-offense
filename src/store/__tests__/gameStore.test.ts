@@ -16,9 +16,9 @@ test('rollUp sums points across chunks and takes the last shot and play', () => 
   expect(r).toMatchObject({ points: 3, shot: 'RIM2', result: 'MADE', family: 'Spider', action: 'X', ftm: 1, fta: 1, orebs: 1, paintTouches: 1 })
 })
 
-test('draftComplete needs a result, and a shot for made or missed', () => {
+test('draftComplete needs only a result: made, missed or turnover (the shot location is optional)', () => {
   expect(draftComplete({})).toBe(false)
-  expect(draftComplete({ result: 'MADE' })).toBe(false)
+  expect(draftComplete({ result: 'MADE' })).toBe(true)
   expect(draftComplete({ result: 'MADE', shot: 'RIM2' })).toBe(true)
   expect(draftComplete({ result: 'TO' })).toBe(true)
   expect(draftComplete({ result: 'FOUL', ftm: 2, fta: 2 })).toBe(true)

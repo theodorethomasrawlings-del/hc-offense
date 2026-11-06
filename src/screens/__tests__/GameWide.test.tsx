@@ -19,74 +19,48 @@ async function liveGame() {
   return router
 }
 const btn = (name: RegExp) => screen.getByRole('button', { name })
+const poss = () => useGameStore.getState().possessions
 
-test('play, shot, made, Next commits with the right points', async () => {
+test('play, made, paint touch saves itself with 2 points', async () => {
   await liveGame()
-  expect(btn(/^next →$/i)).toBeDisabled()
   fireEvent.click(btn(/^Tiger$/))
   fireEvent.click(btn(/^Ice$/))
-  fireEvent.click(btn(/^paint touch 3$/i))
   fireEvent.click(btn(/^made$/i))
-  expect(screen.getByLabelText('points this possession')).toHaveTextContent('3 PTS')
-  fireEvent.click(btn(/^next →$/i))
+  expect(poss()).toHaveLength(0)
+  fireEvent.click(btn(/^paint touch$/i))
   await screen.findByText('#2')
-  expect(useGameStore.getState().possessions[0]).toMatchObject({ points: 3, family: 'Tiger', action: 'Ice', shot: 'PAINT3', paintTouches: 1 })
-  expect(screen.getByLabelText('game totals')).toHaveTextContent('PPP 3.00')
+  expect(poss()[0]).toMatchObject({ points: 2, family: 'Tiger', action: 'Ice', result: 'MADE', paintTouches: 1 })
+  expect(screen.getByLabelText('game totals')).toHaveTextContent('SCORED 100% (1/1)')
 })
 
-test('a turnover needs no shot', async () => {
+test('paint touch first, then turnover, also saves; no play needed', async () => {
   await liveGame()
-  fireEvent.click(btn(/turnover/i))
-  expect(btn(/^next →$/i)).toBeEnabled()
-  fireEvent.click(btn(/^next →$/i))
+  fireEvent.click(btn(/^no paint touch$/i))
+  expect(poss()).toHaveLength(0)
+  fireEvent.click(btn(/^turnover$/i))
   await screen.findByText('#2')
-  expect(useGameStore.getState().possessions[0]).toMatchObject({ points: 0, result: 'TO' })
+  expect(poss()[0]).toMatchObject({ points: 0, family: '', result: 'TO', paintTouches: 0 })
 })
 
-test('OREB opens a fresh page under the same possession number', async () => {
+test('edit last overwrites the possession', async () => {
   await liveGame()
-  fireEvent.click(btn(/mid-range 2/i))
   fireEvent.click(btn(/^missed$/i))
-  fireEvent.click(btn(/OREB, keep going/i))
-  expect(screen.getByRole('status', { name: 'continuation' })).toHaveTextContent('#1 shot 2')
-  expect(screen.getByText('#1')).toBeInTheDocument()
-  fireEvent.click(btn(/rim \/ deep paint 2/i))
-  fireEvent.click(btn(/^made$/i))
-  fireEvent.click(btn(/made FT/i))
-  fireEvent.click(btn(/^next →$/i))
+  fireEvent.click(btn(/^no paint touch$/i))
   await screen.findByText('#2')
-  const p = useGameStore.getState().possessions[0]
-  expect(p).toMatchObject({ n: 1, points: 3, orebs: 1 })
-  expect(p.chunks).toHaveLength(2)
-})
-
-test('OREB after a made shot is refused', async () => {
-  await liveGame()
-  fireEvent.click(btn(/rim \/ deep paint 2/i))
+  fireEvent.click(btn(/^edit last$/i))
+  await screen.findByText(/Editing #1/)
+  fireEvent.click(btn(/^Spider$/))
   fireEvent.click(btn(/^made$/i))
-  fireEvent.click(btn(/OREB, keep going/i))
-  expect(screen.getByRole('status')).toHaveTextContent(/follows a missed shot/i)
-  expect(useGameStore.getState().draft.chunks).toBeUndefined()
-})
-
-test('edit last recomputes points', async () => {
-  await liveGame()
-  fireEvent.click(btn(/rim \/ deep paint 2/i))
-  fireEvent.click(btn(/^made$/i))
-  fireEvent.click(btn(/^next →$/i))
-  await screen.findByText('#2')
-  fireEvent.click(btn(/edit last/i))
-  await screen.findByText('#1')
-  fireEvent.click(btn(/^missed$/i))
-  fireEvent.click(btn(/save/i))
-  await screen.findByText('#2')
-  expect(useGameStore.getState().possessions[0].points).toBe(0)
+  fireEvent.click(btn(/^paint touch$/i))
+  await screen.findByText('Saved #1')
+  expect(poss()).toHaveLength(1)
+  expect(poss()[0]).toMatchObject({ n: 1, points: 2, family: 'Spider', result: 'MADE', paintTouches: 1 })
 })
 
 test('media timeout goes to the summary', async () => {
   const router = await liveGame()
-  fireEvent.click(btn(/turnover/i))
-  fireEvent.click(btn(/^next →$/i))
+  fireEvent.click(btn(/^missed$/i))
+  fireEvent.click(btn(/^no paint touch$/i))
   await screen.findByText('#2')
   fireEvent.click(btn(/^media to$/i))
   await waitFor(() => expect(router.state.location.pathname).toBe('/summary'))

@@ -18,7 +18,7 @@ const ts = () =>
 test('text report has the headline and the play table', () => {
   const t = toText(game, ts())
   expect(t).toContain('HOLY CROSS VS SIENA, 2026-11-02 - OFFENSIVE REPORT')
-  expect(t).toContain('PPP 1.67 (5 pts / 3 poss)')
+  expect(t).toMatch(/SCORED ON \d+% \(\d\/3\)/)
   expect(t).toContain('BY PLAY')
   expect(t).toContain('Tiger Ice')
 })

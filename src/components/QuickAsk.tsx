@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import type { Game } from '../domain/types'
-import { fmtPct, fmtPPP } from '../engine/format'
+import { fmtPct } from '../engine/format'
 import type { Tagged } from '../engine/streaks'
 import { stats, WINDOW_LABEL, windowSlice, type WindowKey } from '../engine/windows'
 
-type Chip = WindowKey | 'SHOTS' | 'TO'
-const CHIPS: Chip[] = ['LAST3', 'LAST10', 'SEGMENT', 'HALF', 'HALF1', 'GAME', 'SHOTS', 'TO']
+type Chip = WindowKey | 'PAINT' | 'TO'
+const CHIPS: Chip[] = ['LAST3', 'LAST10', 'SEGMENT', 'HALF', 'HALF1', 'GAME', 'PAINT', 'TO']
 
 interface Props {
   tagged: Tagged[]
@@ -21,7 +21,7 @@ export default function QuickAsk({ tagged, game }: Props) {
     return () => clearTimeout(t)
   }, [active])
 
-  const label = (c: Chip) => (c === 'SHOTS' ? 'Shots' : c === 'TO' ? 'TOs' : WINDOW_LABEL[c])
+  const label = (c: Chip) => (c === 'PAINT' ? 'Paint' : c === 'TO' ? 'TOs' : WINDOW_LABEL[c])
   const inSecondHalf = game.halfEnds.length > 0
   const chips = CHIPS.filter((c) => c !== 'HALF1' || inSecondHalf)
 
@@ -29,16 +29,16 @@ export default function QuickAsk({ tagged, game }: Props) {
   let sub = ''
   if (active) {
     const g = stats(tagged)
-    if (active === 'SHOTS') {
-      big = fmtPct(g.desirablePct)
-      sub = `good shots · top ${g.tier.TOP} · 2nd ${g.tier.SECOND} · 3rd ${g.tier.THIRD} · eFG ${fmtPct(g.efg)}`
+    if (active === 'PAINT') {
+      big = fmtPct(g.poss ? g.paintPoss / g.poss : null)
+      sub = `paint touch on ${g.paintPoss} of ${g.poss} poss`
     } else if (active === 'TO') {
       big = `${g.tos}`
       sub = `turnovers · ${fmtPct(g.toPct)} of ${g.poss} poss`
     } else {
       const s = stats(windowSlice(tagged, active, game))
-      big = fmtPPP(s.ppp)
-      sub = `PPP · ${s.pts} pts / ${s.poss} poss · scored on ${fmtPct(s.scorePct)} · ${s.tos} TO`
+      big = fmtPct(s.scorePct)
+      sub = `scored on ${s.scores} of ${s.poss} poss · ${s.tos} TO · paint touch ${s.paintPoss}/${s.poss}`
     }
   }
 

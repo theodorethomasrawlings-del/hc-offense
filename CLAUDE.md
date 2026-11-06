@@ -8,6 +8,7 @@ Vite + React + TypeScript PWA, zustand stores, Dexie (IndexedDB), vitest. Design
 - `npm test` — vitest, must pass before any push.
 - `npm run build` — static site in `dist/`.
 - Every push to `main` deploys to https://theodorethomasrawlings-del.github.io/hc-offense/ via `.github/workflows/`. Do not use Vercel.
+- The chart records only play call, made / missed / turnover, and paint touch (Ted, 2026-11-06). The earlier full-detail chart (shot tiers, FTs, OREB chunks, triggers, clock) is git tag `v1-full`; the workflow builds it into `/v1/` so it stays live at https://theodorethomasrawlings-del.github.io/hc-offense/v1/. The data model still carries the old fields so both versions read the same database.
 
 ## Layout
 

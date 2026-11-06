@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import type { Game, Half } from '../domain/types'
 import type { Tagged } from '../engine/streaks'
-import { fmtPct, fmtPPP } from '../engine/format'
+import { fmtPct } from '../engine/format'
 import { fmtTimeouts, hcTimeoutsLeft } from '../engine/timeouts'
 import { stats } from '../engine/windows'
 import QuickAsk from './QuickAsk'
@@ -37,10 +37,7 @@ export default function Header({ game, tagged, n, half }: Props) {
         </div>
         <span className={`badge ${badge.tone}`}>{badge.text}</span>
         <span className="badge" aria-label="game totals">
-          PPP {fmtPPP(g.ppp)} · {g.pts} PTS / {g.poss} · TO {g.tos}
-        </span>
-        <span className="badge" aria-label="shots">
-          GOOD SHOTS {fmtPct(g.desirablePct)} · eFG {fmtPct(g.efg)}
+          SCORED {fmtPct(g.scorePct)} ({g.scores}/{g.poss}) · TO {g.tos}
         </span>
         <span className="badge" aria-label="paint">
           PAINT {g.paintPoss}/{g.poss}

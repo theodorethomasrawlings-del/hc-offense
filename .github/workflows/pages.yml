@@ -21,6 +21,12 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      # The full-detail chart (tag v1-full) stays reachable at /v1/ with its own service worker.
+      - run: |
+          git fetch --depth=1 origin tag v1-full
+          git worktree add ../v1 v1-full
+          cd ../v1 && npm ci && npm run build
+          mkdir -p "$GITHUB_WORKSPACE/dist/v1" && cp -R dist/. "$GITHUB_WORKSPACE/dist/v1/"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

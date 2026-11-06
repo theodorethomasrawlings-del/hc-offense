@@ -2,17 +2,19 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ButtonGroup from '../components/ButtonGroup'
 import Header from '../components/Header'
-import { chunkText } from '../components/PossessionChart'
-import { actionsOf, chunkPoints, CLOCKS, CONT_LABEL, familyNames, LATE_CLOCKS, playLabel, RESULT_LABEL, SHOTS, SHOT_LABEL, TRIGGERS } from '../domain/labels'
-import type { ClockBucket, Continuation, LateClock, Shot, Trigger } from '../domain/types'
-import { draftChunk, draftComplete, rollUp, useGameStore } from '../store/gameStore'
+import { actionsOf, familyNames } from '../domain/labels'
+import type { Result } from '../domain/types'
+import { useGameStore } from '../store/gameStore'
 import { useSettings } from '../store/settingsStore'
 
-/** One question per screen: play → action → how it ended → made? → FTs → rebound → details + save. */
-export type Step = 'PLAY' | 'ACTION' | 'END' | 'MADE' | 'FT' | 'REB' | 'DETAILS'
+/** One question per screen: play → action → made, missed or turnover → paint touch? Saves itself after the last tap. */
+export type Step = 'PLAY' | 'ACTION' | 'RESULT' | 'PAINT'
 
-const PAINT_SHOTS: Shot[] = ['RIM2', 'PAINT2', 'PAINT3']
-const FT_OPTIONS = ['0/1', '1/1', '0/2', '1/2', '2/2', '1/3', '2/3', '3/3']
+const RESULT_OPTIONS: { key: Result; label: string; tone?: 'stop' | 'score' }[] = [
+  { key: 'MADE', label: 'Made', tone: 'stop' },
+  { key: 'MISSED', label: 'Missed', tone: 'score' },
+  { key: 'TO', label: 'Turnover', tone: 'score' },
+]
 
 export default function GameSteps() {
   const nav = useNavigate()
@@ -44,400 +46,174 @@ export default function GameSteps() {
   const last = g.possessions[g.possessions.length - 1]
   const n = editing ? last.n : g.nextN()
   const half = editing ? last.half : g.currentHalf()
-  const chunks = draft.chunks ?? []
-  const complete = draftComplete(draft)
-  const soFar = chunks.reduce((a, c) => a + chunkPoints(c), 0)
-  const pts = soFar + chunkPoints(draftChunk(draft))
-  const ftm = draft.ftm ?? 0
-  const fta = draft.fta ?? 0
-  const paintTouches = draft.paintTouches ?? 0
-  const reversals = draft.reversals ?? 0
 
   const families = familyNames(settings.labels)
   const actions = draft.family ? actionsOf(settings.labels, draft.family) : []
 
-  // --- steps ---
   const pickFamily = (f: string) => {
     g.setDraft({ family: f, action: '' })
-    setStep(actionsOf(settings.labels, f).length ? 'ACTION' : 'END')
+    setStep(actionsOf(settings.labels, f).length ? 'ACTION' : 'RESULT')
+  }
+  const noPlay = () => {
+    g.setDraft({ family: '', action: '' })
+    setStep('RESULT')
   }
   const pickAction = (a: string) => {
     g.setDraft({ action: a })
-    setStep('END')
+    setStep('RESULT')
   }
-  const pickShot = (s: Shot) => {
-    g.setDraft({ shot: s, result: undefined, ftm: 0, fta: 0, paintTouches: PAINT_SHOTS.includes(s) && !paintTouches ? 1 : paintTouches })
-    setStep('MADE')
+  const pickResult = (r: Result) => {
+    g.setDraft({ result: r, shot: 'NONE', ftm: 0, fta: 0 })
+    setStep('PAINT')
   }
-  const turnover = () => {
-    g.setDraft({ shot: 'NONE', result: 'TO', ftm: 0, fta: 0 })
-    setStep('DETAILS')
-  }
-  const fouledNoShot = () => {
-    g.setDraft({ shot: 'NONE', result: 'FOUL', ftm: 0, fta: 0 })
-    setStep('FT')
-  }
-  const made = () => {
-    g.setDraft({ result: 'MADE', ftm: 0, fta: 0 })
-    setStep('DETAILS')
-  }
-  const missed = () => {
-    g.setDraft({ result: 'MISSED', ftm: 0, fta: 0 })
-    setStep('REB')
-  }
-  const andOne = () => {
-    g.setDraft({ result: 'MADE' })
-    setStep('FT')
-  }
-  const fouledShooting = () => {
-    g.setDraft({ result: 'FOUL' })
-    setStep('FT')
-  }
-  const pickFT = (v: string) => {
-    const [m, a] = v.split('/').map(Number)
-    g.setDraft({ ftm: m, fta: a })
-    // A missed last free throw is a live ball: ask about the rebound.
-    setStep(m < a ? 'REB' : 'DETAILS')
-  }
-  const theyGotIt = () => setStep('DETAILS')
-  /** Floor foul with no FTs, kicked ball, out of bounds off them: no shot, same possession, fresh page. */
-  const deadBall = () => {
-    g.setDraft({ shot: 'NONE', result: 'NONE', ftm: 0, fta: 0 })
-    g.continuePossession('FLOOR_FOUL')
-    setStep('PLAY')
-    setMsg(null)
-  }
-  const keepBall = (c: Continuation) => {
-    g.continuePossession(c)
-    setStep('PLAY')
-    setMsg(null)
-  }
-  const single = <K extends string>(field: 'trigger' | 'lateClock' | 'clock', v: K) => g.setDraft({ [field]: draft[field] === v ? null : v })
-
-  const save = async () => {
-    if (!complete) {
-      setMsg('Tap how it ended first')
-      setStep('END')
-      return
-    }
+  const pickPaint = async (touched: boolean) => {
     if (g.committing) return
-    setMsg(null)
+    g.setDraft({ paintTouches: touched ? 1 : 0 })
+    const d = { ...g.draft, paintTouches: touched ? 1 : 0 }
     if (editing) {
-      const all = [...chunks, draftChunk(draft)]
       await g.editPossession(last.id, {
-        ...rollUp(all),
-        transition: draft.transition ?? false,
-        trigger: draft.trigger ?? null,
-        lateClock: draft.lateClock ?? null,
-        clock: draft.clock ?? null,
-        note: draft.note ?? '',
-        chunks: all.length > 1 ? all : [],
+        family: d.family ?? '',
+        action: d.action ?? '',
+        result: d.result ?? 'NONE',
+        shot: 'NONE',
+        ftm: 0,
+        fta: 0,
+        points: d.result === 'MADE' ? 2 : 0,
+        paintTouches: d.paintTouches,
+        chunks: [],
       })
       g.clearDraft()
       setEditing(false)
+      setMsg(`Saved #${last.n}`)
     } else {
       await g.commitPossession()
+      setMsg(`Saved #${n}`)
     }
-    if (draft.note?.trim()) void settings.rememberNote(draft.note.trim())
     setStep('PLAY')
+  }
+
+  const back = () => {
+    if (step === 'ACTION') setStep('PLAY')
+    else if (step === 'RESULT') setStep(draft.family ? 'ACTION' : 'PLAY')
+    else if (step === 'PAINT') setStep('RESULT')
   }
 
   const editLast = () => {
     if (!last) return
-    const cs = last.chunks.length ? last.chunks : [draftChunk({ ...last })]
-    const tail = cs[cs.length - 1]
-    g.setDraft({
-      chunks: cs.slice(0, -1),
-      shot: tail.shot,
-      result: tail.result,
-      ftm: tail.ftm,
-      fta: tail.fta,
-      family: tail.family,
-      action: tail.action,
-      paintTouches: tail.paintTouches,
-      reversals: tail.reversals,
-      transition: last.transition,
-      trigger: last.trigger,
-      lateClock: last.lateClock,
-      clock: last.clock,
-      note: last.note,
-    })
+    g.setDraft({ family: last.family, action: last.action, result: last.result, paintTouches: last.paintTouches })
     setEditing(true)
-    setStep('DETAILS')
+    setStep('PLAY')
     setMsg(`Editing #${last.n}`)
   }
-
-  const back = () => {
+  const cancelEdit = () => {
+    g.clearDraft()
+    setEditing(false)
+    setStep('PLAY')
     setMsg(null)
-    switch (step) {
-      case 'PLAY':
-        if (chunks.length) {
-          const prev = chunks[chunks.length - 1]
-          g.setDraft({ chunks: chunks.slice(0, -1), shot: prev.shot, result: prev.result, ftm: prev.ftm, fta: prev.fta, family: prev.family, action: prev.action, paintTouches: prev.paintTouches, reversals: prev.reversals })
-          setStep('REB')
-        }
-        return
-      case 'ACTION':
-        g.setDraft({ family: '', action: '' })
-        setStep('PLAY')
-        return
-      case 'END':
-        setStep(draft.family && actions.length ? 'ACTION' : 'PLAY')
-        return
-      case 'MADE':
-        g.setDraft({ shot: undefined, result: undefined })
-        setStep('END')
-        return
-      case 'FT':
-        g.setDraft({ ftm: 0, fta: 0 })
-        setStep(draft.shot && draft.shot !== 'NONE' ? 'MADE' : 'END')
-        return
-      case 'REB':
-        setStep(fta ? 'FT' : 'MADE')
-        return
-      case 'DETAILS':
-        setStep(draft.result === 'TO' ? 'END' : draft.result === 'MISSED' || ftm < fta ? 'REB' : fta ? 'FT' : 'MADE')
-        return
-    }
   }
-
-  const cancelOrUndo = async () => {
-    setMsg(null)
+  const undo = async () => {
+    if (editing) return cancelEdit()
+    await g.undoLast()
     g.clearDraft()
     setStep('PLAY')
-    if (editing) {
-      setEditing(false)
-      return
-    }
-    if (step === 'PLAY' && !chunks.length) await g.undoLast()
+    setMsg(null)
   }
-
-  const mediaTO = async () => {
-    await g.mediaTimeout()
+  const mark = async (fn: () => Promise<void>) => {
+    if (editing) return
+    await fn()
     nav('/summary')
-  }
-  const hcTO = async (kind: 'FULL' | 'THIRTY') => {
-    await g.hcTimeout(kind)
-    nav('/summary')
-  }
-  const endHalf = async () => {
-    await g.endHalf()
-    nav('/summary')
-  }
-  const lastN = last?.n ?? 0
-  const hcOnLast = game.hcTimeouts.some((t) => t.n === lastN)
-  const markOnLast = hcOnLast || (lastN > 0 && (game.timeouts.includes(lastN) || game.halfEnds.includes(lastN)))
-  const markLabel = hcOnLast ? 'HC TO' : game.halfEnds.includes(lastN) ? 'half' : 'media TO'
-  const undoMark = async () => {
-    if (!window.confirm(`Remove the ${markLabel} after #${lastN}?`)) return
-    await g.undoMark()
   }
   const endGame = async () => {
     if (!window.confirm(`End game vs ${game.opponent}?`)) return
     await g.endGame()
     nav('/summary')
   }
-  const noteHistory = [...new Set([...settings.noteHistory, ...g.possessions.map((p) => p.note.trim()).filter(Boolean)])].slice(0, 60)
 
-  // What has been answered so far on this possession.
-  const crumbs = [draft.transition ? 'Transition' : '', playLabel({ family: draft.family ?? '', action: draft.action ?? '' }), draft.shot && draft.shot !== 'NONE' ? SHOT_LABEL[draft.shot] : '', draft.result ? RESULT_LABEL[draft.result] : '', fta ? `${ftm}/${fta} FT` : '']
-    .filter(Boolean)
-    .join(' · ')
-  const idle = step === 'PLAY' && !draft.family && !draft.transition && !chunks.length && !editing
-
-  const question: Record<Step, string> = {
-    PLAY: 'What play?',
-    ACTION: `${draft.family}: which action?`,
-    END: 'How did it end?',
-    MADE: `${draft.shot ? SHOT_LABEL[draft.shot] : 'Shot'}: made?`,
-    FT: 'Free throws made?',
-    REB: 'Who got the rebound?',
-    DETAILS: 'Save, or add details first.',
-  }
+  const question = (text: string) => (
+    <div className="question" role="heading" aria-level={1}>
+      {text}
+    </div>
+  )
+  const soFar = [draft.family, draft.action].filter(Boolean).join(' ') || (step !== 'PLAY' ? 'No set play' : '')
 
   return (
-    <main className="screen game" style={{ gap: 8 }}>
+    <main className="screen game step" style={{ gap: 8 }}>
       <Header game={game} tagged={g.tagged} n={n} half={half} />
-      {(chunks.length > 0 || crumbs) && (
-        <div className="panel row" style={{ gap: 12, padding: '6px 12px', flexWrap: 'wrap' }} role="status" aria-label="so far">
-          <b>
-            #{n}
-            {chunks.length > 0 && ` shot ${chunks.length + 1}`}
-          </b>
-          {chunks.length > 0 && <span className="muted">{chunks.map((c) => `${chunkText(c)} → ${c.cont ? CONT_LABEL[c.cont] : ''}`).join(' · ')}</span>}
-          {crumbs && <span>{crumbs}</span>}
-          <span className="badge" aria-label="points this possession">{pts} PTS</span>
+      {soFar && step !== 'PLAY' && (
+        <div className="muted" role="status" aria-label="so far" style={{ fontSize: 16 }}>
+          #{n}: {soFar}
+          {draft.result && step === 'PAINT' ? ` · ${draft.result === 'TO' ? 'Turnover' : draft.result === 'MADE' ? 'Made' : 'Missed'}` : ''}
         </div>
       )}
 
-      <h1 className="question" aria-live="polite">
-        {question[step]}
-      </h1>
-
-      <div className="grid step" style={{ gap: 10, alignContent: 'start', flex: 1, minHeight: 0 }}>
-        {step === 'PLAY' && (
-          <>
-            <div className="grid" style={{ gridTemplateColumns: '1fr 1fr', gap: 6 }}>
-              <button className={`btn ${draft.transition ? 'stop on' : ''}`} style={{ minHeight: 56 }} aria-pressed={!!draft.transition} onClick={() => g.setDraft({ transition: !draft.transition })}>
-                Transition
-              </button>
-              <button className="btn" style={{ minHeight: 56 }} onClick={() => setStep('END')}>
-                No set play
-              </button>
-            </div>
-            <ButtonGroup columns={4} height={64} options={families.map((f) => ({ key: f, label: f }))} selected={draft.family || undefined} onSelect={pickFamily} ariaLabel="play" />
-          </>
-        )}
-        {step === 'ACTION' && (
-          <>
-            <ButtonGroup columns={4} height={60} options={actions.map((a) => ({ key: a, label: a }))} selected={draft.action || undefined} onSelect={pickAction} ariaLabel="action" />
-            <button className="btn small" onClick={() => setStep('END')}>
-              No action, just {draft.family}
+      {step === 'PLAY' && (
+        <>
+          {question(`#${n}: what play?`)}
+          <ButtonGroup columns={2} height={56} fontSize={19} options={families.map((f) => ({ key: f, label: f }))} selected={draft.family || undefined} onSelect={pickFamily} ariaLabel="play" />
+          <button className="btn" style={{ minHeight: 52 }} onClick={noPlay}>
+            No set play
+          </button>
+        </>
+      )}
+      {step === 'ACTION' && (
+        <>
+          {question(`${draft.family}: which action?`)}
+          <ButtonGroup columns={2} height={56} fontSize={19} options={actions.map((a) => ({ key: a, label: a }))} selected={draft.action || undefined} onSelect={pickAction} ariaLabel="action" />
+          <button className="btn" style={{ minHeight: 52 }} onClick={() => setStep('RESULT')}>
+            Just {draft.family}
+          </button>
+        </>
+      )}
+      {step === 'RESULT' && (
+        <>
+          {question('Made, missed or turnover?')}
+          <ButtonGroup columns={1} height={64} fontSize={22} options={RESULT_OPTIONS} selected={draft.result} onSelect={pickResult} ariaLabel="result" />
+        </>
+      )}
+      {step === 'PAINT' && (
+        <>
+          {question('Paint touch?')}
+          <div className="grid" style={{ gap: 8 }}>
+            <button className="btn stop" style={{ minHeight: 64, fontSize: 22 }} onClick={() => void pickPaint(true)}>
+              Paint touch
             </button>
-          </>
-        )}
-        {step === 'END' && (
-          <>
-            <ButtonGroup<Shot> title="Shot (top · 2nd · 3rd tier)" columns={2} height={60} options={SHOTS.map((s) => ({ key: s.key, label: s.label }))} selected={draft.shot} onSelect={pickShot} />
-            <div className="grid" style={{ gridTemplateColumns: '1fr 1fr', gap: 6 }}>
-              <button className="btn score" style={{ minHeight: 60 }} onClick={turnover}>
-                Turnover
-              </button>
-              <button className="btn" style={{ minHeight: 60 }} onClick={fouledNoShot}>
-                Fouled, no shot (FTs)
-              </button>
-            </div>
-            <button className="btn" style={{ minHeight: 56 }} onClick={deadBall}>
-              Dead ball, we keep it (foul no FTs, kick, OOB) → same possession
-            </button>
-          </>
-        )}
-        {step === 'MADE' && (
-          <div className="grid" style={{ gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-            <button className="btn stop on" style={{ minHeight: 80 }} onClick={made}>
-              Made
-            </button>
-            <button className="btn score on" style={{ minHeight: 80 }} onClick={missed}>
-              Missed
-            </button>
-            <button className="btn" style={{ minHeight: 64 }} onClick={andOne}>
-              And-1 (made + FT)
-            </button>
-            <button className="btn" style={{ minHeight: 64 }} onClick={fouledShooting}>
-              Fouled, missed shot
+            <button className="btn" style={{ minHeight: 64, fontSize: 22 }} onClick={() => void pickPaint(false)}>
+              No paint touch
             </button>
           </div>
-        )}
-        {step === 'FT' && <ButtonGroup columns={4} height={64} options={FT_OPTIONS.map((o) => ({ key: o, label: o }))} selected={fta ? `${ftm}/${fta}` : undefined} onSelect={pickFT} ariaLabel="free throws" />}
-        {step === 'REB' && (
-          <div className="grid" style={{ gridTemplateColumns: '1fr', gap: 8 }}>
-            <button className="btn" style={{ minHeight: 72 }} onClick={theyGotIt}>
-              They got it (possession over)
-            </button>
-            <button className="btn stop on" style={{ minHeight: 72 }} onClick={() => keepBall('OREB')}>
-              OREB, keep going
-            </button>
-            <button className="btn" style={{ minHeight: 56 }} onClick={() => keepBall('DEAD_OREB')}>
-              Dead ball OREB
-            </button>
-          </div>
-        )}
-        {step === 'DETAILS' && (
-          <>
-            <button className="btn primary" style={{ minHeight: 64 }} onClick={save} disabled={!complete || g.committing}>
-              {editing ? 'Save' : 'Save →'}
-            </button>
-            <div className="row" style={{ flexWrap: 'wrap' }}>
-              <button className={`btn chip ${paintTouches ? 'on' : ''}`} style={{ minHeight: 48 }} onClick={() => g.setDraft({ paintTouches: (paintTouches + 1) % 4 })} aria-label="paint touch">
-                Paint touch x{paintTouches}
-              </button>
-              <button className={`btn chip ${reversals ? 'on' : ''}`} style={{ minHeight: 48 }} onClick={() => g.setDraft({ reversals: (reversals + 1) % 4 })} aria-label="reversal">
-                Reversal x{reversals}
-              </button>
-              {step === 'DETAILS' && (
-                <>
-                  <button className="btn chip" style={{ minHeight: 48 }} onClick={() => setStep('PLAY')}>
-                    Change play
-                  </button>
-                  <button className="btn chip" style={{ minHeight: 48 }} onClick={() => setStep('END')}>
-                    Change shot
-                  </button>
-                </>
-              )}
-            </div>
-            <ButtonGroup<ClockBucket> title="Clock at half court" columns={4} height={46} fontSize={17} options={CLOCKS} selected={draft.clock ?? undefined} onSelect={(v) => single('clock', v)} />
-            <div className="grid two" style={{ gap: 10 }}>
-              <ButtonGroup<Trigger> title="Trigger" columns={3} height={46} fontSize={15} options={TRIGGERS} selected={draft.trigger ?? undefined} onSelect={(v) => single('trigger', v)} />
-              <ButtonGroup<LateClock> title="Late clock at 12" columns={2} height={46} fontSize={17} options={LATE_CLOCKS} selected={draft.lateClock ?? undefined} onSelect={(v) => single('lateClock', v)} />
-            </div>
-            <input
-              type="text"
-              placeholder="Note (optional)"
-              aria-label="note"
-              list="note-history"
-              value={draft.note ?? ''}
-              onChange={(e) => g.setDraft({ note: e.target.value })}
-              onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
-              enterKeyHint="done"
-            />
-            <datalist id="note-history">
-              {noteHistory.map((x) => (
-                <option key={x} value={x} />
-              ))}
-            </datalist>
-          </>
-        )}
-      </div>
+        </>
+      )}
 
-      <footer className="row" style={{ justifyContent: 'space-between', gap: 8 }}>
-        <div className="row" style={{ gap: 6, fontSize: 15, flexWrap: 'wrap' }}>
-          {step !== 'PLAY' || chunks.length ? (
+      <footer className="grid" style={{ gap: 6, marginTop: 'auto' }}>
+        <div className="row" style={{ gap: 6, flexWrap: 'wrap' }}>
+          {step !== 'PLAY' && (
             <button className="btn small" onClick={back}>
               ← Back
             </button>
-          ) : null}
-          <button className="btn small" onClick={cancelOrUndo} disabled={idle && !g.possessions.length}>
-            {editing ? 'Cancel edit' : idle ? 'Undo last' : 'Start over'}
+          )}
+          <button className="btn small" onClick={undo} disabled={!g.possessions.length && !editing}>
+            {editing ? 'Cancel edit' : 'Undo last'}
           </button>
-          {idle && (
-            <>
-              <button className="btn small" onClick={editLast} disabled={!g.possessions.length}>
-                Edit last
-              </button>
-              {markOnLast ? (
-                <button className="btn small warn" onClick={undoMark}>
-                  Undo {markLabel}
-                </button>
-              ) : (
-                <>
-                  <button className="btn small" onClick={mediaTO} disabled={!g.possessions.length}>
-                    Media TO
-                  </button>
-                  <button className="btn small" onClick={() => hcTO('FULL')}>
-                    Full TO
-                  </button>
-                  <button className="btn small" onClick={() => hcTO('THIRTY')}>
-                    30s TO
-                  </button>
-                  <button className="btn small" onClick={endHalf} disabled={!g.possessions.length || half >= 3}>
-                    End half
-                  </button>
-                </>
-              )}
-              <button className="btn small danger" onClick={endGame}>
-                End game
-              </button>
-            </>
-          )}
-          {msg && <span className="warn" role="status">{msg}</span>}
+          <button className="btn small" onClick={editLast} disabled={!g.possessions.length || editing}>
+            Edit last
+          </button>
+          <button className="btn small" onClick={() => mark(() => g.mediaTimeout())} disabled={!g.possessions.length || editing}>
+            Media TO
+          </button>
+          <button className="btn small" onClick={() => mark(() => g.hcTimeout('FULL'))} disabled={editing}>
+            HC TO
+          </button>
+          <button className="btn small" onClick={() => mark(() => g.endHalf())} disabled={!g.possessions.length || half >= 3 || editing}>
+            End half
+          </button>
+          <button className="btn small danger" onClick={endGame}>
+            End game
+          </button>
+          {msg && <span className="muted" role="status">{msg}</span>}
         </div>
-        <div className="row">
-          {idle && (
-            <button className="btn" style={{ minHeight: 64, minWidth: 120, background: 'var(--stop)', color: '#000' }} onClick={() => nav('/summary')}>
-              Summary
-            </button>
-          )}
-        </div>
+        <button className="btn" style={{ minHeight: 52, background: 'var(--stop)', color: '#000' }} onClick={() => nav('/summary')}>
+          Summary
+        </button>
       </footer>
     </main>
   )

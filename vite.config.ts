@@ -24,7 +24,7 @@ export default defineConfig({
           { src: 'icons/512.png', sizes: '512x512', type: 'image/png' },
         ],
       },
-      workbox: { globPatterns: ['**/*.{js,css,html,png,svg,woff2}'] },
+      workbox: { globPatterns: ['**/*.{js,css,html,png,svg,woff2}'], navigateFallbackDenylist: [/\/v1\//] },
     }),
   ],
   test: {
